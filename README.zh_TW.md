@@ -36,7 +36,7 @@
     cd /path/to/odfweb-container-deployment-nginx-X.Y.Z
     ```
 
-1. 編輯 [docker-compose.yml Docker Compose 設定檔](docker-compose.yml)，將下列環境變數值的佔位字(`__REDACTED__`)替換為對應之適當值：
+1. 編輯 [db.env 資料庫環境設定檔](db.env)，將下列環境變數值的佔位字(`__REDACTED__`)替換為對應之適當值：
     + `MYSQL_ROOT_PASSWORD`: 「root」資料庫使用者的密碼。
     + `MYSQL_PASSWORD`: 應用服務之資料庫使用者的密碼。
 1. 執行下列命令以自容器映像創建服務容器並啟動服務：
