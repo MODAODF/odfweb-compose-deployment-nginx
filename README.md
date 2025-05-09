@@ -45,6 +45,17 @@ Refer to the following instructions to deploy this product to the service host:
     docker compose up -d
     ```
 
+## References
+
+The following materials are referenced in the development of this product:
+
+* [docker/README.md at master · nextcloud/docker](https://github.com/nextcloud/docker/blob/master/README.md)  
+  Provides the basic information of the Nextcloud-like container image.
+* [docker/.examples at master · nextcloud/docker](https://github.com/nextcloud/docker/tree/master/.examples)  
+  Provides reference implementation of the fpm variant of the Nextcloud-like container image.
+* [mariadb - Official Image | Docker Hub](https://hub.docker.com/_/mariadb)  
+  Explains the supported environment variables of the MariaDB container image.
+
 ## Licensing
 
 Unless otherwise noted(individual file's header/[REUSE.toml](https://reuse.software/spec-3.3/#reusetoml)), this product is licensed under [the 3.0 version of the GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html), or any of its recent versions you would prefer.

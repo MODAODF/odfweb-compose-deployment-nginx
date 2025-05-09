@@ -7,43 +7,57 @@
 #
 # Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
 # SPDX-License-Identifier: AGPL-3.0-or-later
-name: odfweb-apache
+name: odfweb-nginx
 volumes:
   odfweb:
   db:
 
 services:
+  # Note: MariaDB is an external service. You can find more information about the configuration here:
+  # https://hub.docker.com/_/mariadb
   db:
-    image: mariadb:10.6
+    # Note: Check the recommend version here: https://docs.odfweb.com/server/latest/admin_manual/installation/system_requirements.html#server
+    image: mariadb:lts
     restart: always
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    command: --transaction-isolation=READ-COMMITTED
     volumes:
       - db:/var/lib/mysql
-    environment:
-      # The password for the "root" user of the database
-      - MYSQL_ROOT_PASSWORD=__REDACTED__
-      # The password for the service user of the database
-      - MYSQL_PASSWORD=__REDACTED__
-      # The name of the database
-      - MYSQL_DATABASE=odfweb
-      # The name of the service user of the database
-      - MYSQL_USER=odfweb
+    env_file:
+      - db.env
+
+  # Note: Redis is an external service. You can find more information about the configuration here:
+  # https://hub.docker.com/_/redis
+  redis:
+    image: redis:alpine
+    restart: always
 
   app:
-    image: odfweb:4
+    image: cncf-distribution.local/odfweb:fpm
     restart: always
-    ports:
-      - 8080:80
-    links:
+    depends_on:
+      - redis
       - db
     volumes:
       - odfweb:/var/www/html
     environment:
-      # The password for the service user of the database
-      - MYSQL_PASSWORD=__REDACTED__
-      # The name of the database
-      - MYSQL_DATABASE=odfweb
-      # The name of the service user of the database
-      - MYSQL_USER=odfweb
-      # The host address of the database
       - MYSQL_HOST=db
+    env_file:
+      - db.env
+
+  # Note: Nginx is an external service. You can find more information about the configuration here:
+  # https://hub.docker.com/_/nginx/
+  web:
+    image: nginx:alpine-slim
+    restart: always
+    ports:
+      - 8080:80
+      - 8443:443
+    depends_on:
+      - app
+    volumes:
+      # https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl/odfweb.example.com.crt:/etc/ssl/nginx/odfweb.example.com.crt:ro
+      - ./ssl/odfweb.example.com.key:/etc/ssl/nginx/odfweb.example.com.key:ro
+    volumes_from:
+      - app

@@ -45,6 +45,17 @@
     docker compose up -d
     ```
 
+## 參考資料
+
+開發本產品在開發期間參考了下列資源：
+
+* [docker/README.md at master · nextcloud/docker](https://github.com/nextcloud/docker/blob/master/README.md)  
+  提供類 Nextcloud 容器映像的基本資訊。
+* [docker/.examples at master · nextcloud/docker](https://github.com/nextcloud/docker/tree/master/.examples)  
+  提供類 Nextcloud 容器映像 fpm 變體的 Docker Compose 參考實作。
+* [mariadb - Official Image | Docker Hub](https://hub.docker.com/_/mariadb)  
+  說明 MariaDB 容器映像支援的環境變數。
+
 ## 授權條款
 
 除非另有註明（個別檔案的開頭 / [REUSE.toml](https://reuse.software/spec-3.3/#reusetoml)），本產品以[第 3.0 版之 GNU Affero 通用公眾授權條款](https://www.gnu.org/licenses/agpl-3.0.en.html)（或其任意更近期之版本）釋出供大眾於授權範圍內自由使用。

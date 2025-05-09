@@ -88,3 +88,7 @@
 
 # Don't track continuous integration virtual environments
 /continuous-integration/venv/
+
+# Don't track TLS(SSL) certificate files
+*.crt
+*.key
