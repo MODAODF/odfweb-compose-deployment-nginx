@@ -1,8 +1,8 @@
-# ODFWEB 服務的容器部署（Apache 變體）
+# ODFWEB 服務的容器部署（NGINX+FPM 變體）
 
-快速地部署一個符合需求的 ODFWEB 服務（Apache 變體）
+快速地部署一個符合需求的 ODFWEB 服務（NGINX+FPM 變體）
 
-<https://www.ossii.com.tw/git/buoren/odfweb-container-deployment-apache>  
+<https://github.com/MODAODF/odfweb-compose-deployment-nginx>  
 [![pre-commit 框架已引入標誌](https://img.shields.io/badge/pre--commit-已引入-brightgreen?logo=pre-commit&logoColor=white "鄙專案使用 pre-commit 框架來檢查潛在問題")](https://pre-commit.com/)
 
 [English](README.md) 台灣中文
@@ -18,7 +18,7 @@
 
 參閱下列指示以將本產品部署到服務主機上：
 
-1. 於[本產品的釋出頁](https://www.ossii.com.tw/git/buoren/odfweb-container-deployment-apache/releases)下載釋出包。
+1. 於[本產品的釋出頁](https://github.com/MODAODF/odfweb-compose-deployment-nginx/releases)下載釋出包。
 1. 將釋出包上傳至服務主機上。
 1. 取得服務主機的命令列界面。
 1. 執行下列命令以解開產品釋出包：
@@ -27,13 +27,13 @@
     tar \
         --extract \
         --verbose \
-        --file /path/to/odfweb-container-deployment-apache-X.Y.Z.tar.gz
+        --file /path/to/odfweb-container-deployment-nginx-X.Y.Z.tar.gz
     ```
 
 1. 執行下列命令以將作業目錄(working directory)切換到解開的產品目錄：
 
     ```bash
-    cd /path/to/odfweb-container-deployment-apache-X.Y.Z
+    cd /path/to/odfweb-container-deployment-nginx-X.Y.Z
     ```
 
 1. 編輯 [docker-compose.yml Docker Compose 設定檔](docker-compose.yml)，將下列環境變數值的佔位字(`__REDACTED__`)替換為對應之適當值：
