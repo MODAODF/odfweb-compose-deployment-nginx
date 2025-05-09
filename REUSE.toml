@@ -6,7 +6,7 @@
 #   https://reuse.software/spec-3.2/#reusetoml
 #
 # Copyright 2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>
-# SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: AGPL-3.0-or-later
 
 version = 1
 
@@ -18,4 +18,4 @@ path = [
     "**/README.*.md"
 ]
 SPDX-FileCopyrightText = '2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>'
-SPDX-License-Identifier = 'MIT'
+SPDX-License-Identifier = 'AGPL-3.0-or-later'

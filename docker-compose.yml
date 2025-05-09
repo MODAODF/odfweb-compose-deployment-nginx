@@ -6,39 +6,44 @@
 #   https://docs.docker.com/compose/compose-file/
 #
 # Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
-# SPDX-License-Identifier: CC-BY-SA-4.0
-name: project-name
-services:
-  # Environment for developing and building the product
-  dev-environment:
-    profiles:
-      - dev
-    container_name: project-name-dev
-    hostname: project-name-dev
-    image: rockylinux:8
-    volumes:
-      - type: bind
-        source: ./
-        target: /project
-    environment:
-      # Set local timezone to UTC+8
-      - TZ=CST-8
-    init: true
-    command: sleep infinity
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: odfweb-apache
+volumes:
+  odfweb:
+  db:
 
-  # Environment for testing the product
-  test-environment:
-    profiles:
-      - test
-    container_name: project-name-test
-    hostname: project-name-test
-    image: rockylinux:8
+services:
+  db:
+    image: mariadb:10.6
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
     volumes:
-      - type: bind
-        source: ./
-        target: /project
+      - db:/var/lib/mysql
     environment:
-      # Set local timezone to UTC+8
-      - TZ=CST-8
-    init: true
-    command: sleep infinity
+      # The password for the "root" user of the database
+      - MYSQL_ROOT_PASSWORD=__REDACTED__
+      # The password for the service user of the database
+      - MYSQL_PASSWORD=__REDACTED__
+      # The name of the database
+      - MYSQL_DATABASE=odfweb
+      # The name of the service user of the database
+      - MYSQL_USER=odfweb
+
+  app:
+    image: odfweb:4
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - db
+    volumes:
+      - odfweb:/var/www/html
+    environment:
+      # The password for the service user of the database
+      - MYSQL_PASSWORD=__REDACTED__
+      # The name of the database
+      - MYSQL_DATABASE=odfweb
+      # The name of the service user of the database
+      - MYSQL_USER=odfweb
+      # The host address of the database
+      - MYSQL_HOST=db

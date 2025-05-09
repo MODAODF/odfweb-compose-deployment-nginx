@@ -1,58 +1,52 @@
-# 專案範本
+# ODFWEB 服務的容器部署（Apache 變體）
 
-快速建立符合需求的軟體專案
+快速地部署一個符合需求的 ODFWEB 服務（Apache 變體）
 
-<https://github.com/the-common/project-template>  
+<https://www.ossii.com.tw/git/buoren/odfweb-container-deployment-apache>  
 [![pre-commit 框架已引入標誌](https://img.shields.io/badge/pre--commit-已引入-brightgreen?logo=pre-commit&logoColor=white "鄙專案使用 pre-commit 框架來檢查潛在問題")](https://pre-commit.com/)
 
 [English](README.md) 台灣中文
 
-## 特色
+## 先決條件
 
-* 整合 [EditorConfig](https://editorconfig.org) 以在專案協作者間支援的純文字文件編輯器/整合式開發環境上同步偏好設定。
-* 整合 [pre-commit 框架](https://pre-commit.com) 以在每次版本提交時自動檢查包含但不限於下列之潛在問題：
-    + 意外提交進機敏資訊或是不適合版控的文件
-    + 不一致的程式碼縮排或換行格式
-    + Shell 腳本、Markdown 與 YAML 文件的撰寫
-    + 智慧財產授權合規性
-* 包含下列虛擬化解決方案之，用於快速啟動產品開發與測試之虛擬化環境的設定檔與自動化工具：
-    + [Docker Compose](https://docs.docker.com/compose/)  
-      適用於可以輕易容器化之工作負載。
-    + [Vagrant](https://www.vagrantup.com/)  
-      適用於需要完整虛擬機的工作負載。
-* 支援用於自動化產品建構與測試之 GitLab 持續整合(CI)機制
-* 支援用於自動化發布產品建構產物之 GitLab 持續交付(CD)機制
+在使用本產品前您應先滿足下列條件：
 
-## 如何使用
+* 服務主機須已安裝近期版本之 Docker Engine（或其功能對等之）軟體。
+* 在部署服務期間服務主機須有 Docker Hub 容器映像註冊服務之存取能力。
 
-1. 自專案獲取一份軟體原始碼封存檔。
-1. 解開軟體原始碼封存檔。
-1. 將除下列之所有檔案複製進您的既有專案目錄：
-    + .markdownlint.yml
-    + README.md
-    + README.*.md
-1. 將下列檔案更名或將其內容整合進您的既有檔案：
-    + real.gitattributes → .gitattributes
-    + real.markdownlint.yml → .markdownlint.yml
-    + real.README.md → README.md
-    + real.README.zh_TW.md → README.zh_TW.md
-1. （如適用）編輯新的 [README.md 讀我文件](README.md)，將下列 _佔位字_ 替換為適當之內容：
-    + `_project_name_`：專案的（展示用）名稱。
-    + `_project_summary_`：一個單行的專案用途文字總結。
-    + `_namespace_/_project_`  
-      專案網址的變動部份，如果您使用的是令一個專案託管服務的話您需要改替換完整的網址。
-    + `_license_name_`：專案使用的授權條款名稱。
-    + `_license_url_`：專案使用的授權條款網址。
-1. 更新 [REUSE.toml reuse-tool 設定檔](REUSE.toml)中的著作權持有人名稱與宣告年份。
-1. 批量將下列檔案中的 `project-name` 佔位字替換為您專案的主機名稱(hostname)適用版名稱：
-    + [Vagrantfile](Vagrantfile)
-    + [docker-compose.yml](docker-compose.yml)
-1. 將所有的變更提交為一個新的修訂版（參考提交訊息：`chore: 初始化新專案`）。
+## 使用說明
 
-您可以移除/改寫部份檔案/檔案內容以符合您專案的需求。
+參閱下列指示以將本產品部署到服務主機上：
+
+1. 於[本產品的釋出頁](https://www.ossii.com.tw/git/buoren/odfweb-container-deployment-apache/releases)下載釋出包。
+1. 將釋出包上傳至服務主機上。
+1. 取得服務主機的命令列界面。
+1. 執行下列命令以解開產品釋出包：
+
+    ```bash
+    tar \
+        --extract \
+        --verbose \
+        --file /path/to/odfweb-container-deployment-apache-X.Y.Z.tar.gz
+    ```
+
+1. 執行下列命令以將作業目錄(working directory)切換到解開的產品目錄：
+
+    ```bash
+    cd /path/to/odfweb-container-deployment-apache-X.Y.Z
+    ```
+
+1. 編輯 [docker-compose.yml Docker Compose 設定檔](docker-compose.yml)，將下列環境變數值的佔位字(`__REDACTED__`)替換為對應之適當值：
+    + `MYSQL_ROOT_PASSWORD`: 「root」資料庫使用者的密碼。
+    + `MYSQL_PASSWORD`: 應用服務之資料庫使用者的密碼。
+1. 執行下列命令以自容器映像創建服務容器並啟動服務：
+
+    ```bash
+    docker compose up -d
+    ```
 
 ## 授權條款
 
-除非另有註明（個別檔案的開頭 / [REUSE.toml](https://reuse.software/spec-3.3/#reusetoml)），本產品以 [MIT 授權條款](https://opensource.org/license/mit)釋出供大眾於授權範圍內自由使用。
+除非另有註明（個別檔案的開頭 / [REUSE.toml](https://reuse.software/spec-3.3/#reusetoml)），本產品以[第 3.0 版之 GNU Affero 通用公眾授權條款](https://www.gnu.org/licenses/agpl-3.0.en.html)（或其任意更近期之版本）釋出供大眾於授權範圍內自由使用。
 
 本作品遵從 [REUSE 規範](https://reuse.software/spec/)，參閱 [REUSE - Make licensing easy for everyone](https://reuse.software/) 網站以了解本產品的授權相關資訊。
