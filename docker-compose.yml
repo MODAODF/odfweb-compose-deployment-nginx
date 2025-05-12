@@ -58,7 +58,7 @@ services:
       - app
     volumes:
       # https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx.conf.d/odfweb.conf:/etc/nginx/conf.d/default.conf:ro
       - ./ssl/odfweb.example.com.crt:/etc/ssl/nginx/odfweb.example.com.crt:ro
       - ./ssl/odfweb.example.com.key:/etc/ssl/nginx/odfweb.example.com.key:ro
     volumes_from:
