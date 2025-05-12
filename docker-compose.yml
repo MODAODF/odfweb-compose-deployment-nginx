@@ -41,6 +41,7 @@ services:
       - odfweb:/var/www/html
     environment:
       - MYSQL_HOST=db
+      - REDIS_HOST=redis
     env_file:
       - db.env
 
