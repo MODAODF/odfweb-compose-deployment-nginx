@@ -35,8 +35,8 @@ services:
     image: cncf-distribution.local/odfweb:fpm
     restart: always
     depends_on:
-      - redis
       - db
+      - redis
     volumes:
       - odfweb:/var/www/html
     environment:
