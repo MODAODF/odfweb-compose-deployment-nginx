@@ -92,3 +92,4 @@
 # Don't track TLS(SSL) certificate files
 *.crt
 *.key
+*.pem

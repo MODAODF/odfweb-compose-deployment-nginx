@@ -1,0 +1,22 @@
+<!--
+    Drop-in configuration file for the SoftwareUpgrade module.
+
+    SPDX-License-Identifier: MPL-2.0
+    Copyright 2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>
+-->
+<config>
+    <module enable="true" type="bool">
+        <load>SoftwareUpgrade.so</load>
+        <detail>
+            <name>SoftwareUpgrade</name>
+            <serviceURI>/oxool/softwareupgrade/</serviceURI>
+            <summary>Software Upgrade</summary>
+            <author>Firefly &lt;firefly@ossii.com.tw&gt;</author>
+            <license>MPLv2.0</license>
+            <description/>
+            <adminPrivilege default="false" desc="Requires admin authentication." type="bool">false</adminPrivilege>
+            <adminIcon desc="Please refer to https://icons.getbootstrap.com/ for icon names.">hammer</adminIcon>
+            <adminItem>Software Upgrade</adminItem>
+        </detail>
+    </module>
+</config>
