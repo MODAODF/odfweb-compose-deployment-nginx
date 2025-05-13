@@ -55,6 +55,8 @@
   提供類 Nextcloud 容器映像 fpm 變體的 Docker Compose 參考實作。
 * [mariadb - Official Image | Docker Hub](https://hub.docker.com/_/mariadb)  
   說明 MariaDB 容器映像支援的環境變數。
+* [Reverse proxy settings in Nginx config (SSL termination) — Proxy settings — SDK https://sdk.collaboraonline.com/ documentation](https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html#reverse-proxy-settings-in-nginx-config-ssl-termination)  
+  說明如何設定相容於類 MODAODFWEB 服務之 NGINX 反向代理服務。
 
 ## 授權條款
 

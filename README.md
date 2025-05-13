@@ -55,6 +55,8 @@ The following materials are referenced in the development of this product:
   Provides reference implementation of the fpm variant of the Nextcloud-like container image.
 * [mariadb - Official Image | Docker Hub](https://hub.docker.com/_/mariadb)  
   Explains the supported environment variables of the MariaDB container image.
+* [Reverse proxy settings in Nginx config (SSL termination) — Proxy settings — SDK https://sdk.collaboraonline.com/ documentation](https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html#reverse-proxy-settings-in-nginx-config-ssl-termination)  
+  Explains how to configure the NGINX reverse proxy service to make it compatible with the MODAODFWEB-like services.
 
 ## Licensing
 

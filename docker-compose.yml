@@ -60,3 +60,29 @@ services:
       - ./ssl/odfweb.example.com.key:/etc/ssl/nginx/odfweb.example.com.key:ro
     volumes_from:
       - app
+
+  editor:
+    image: cncf-distribution.local/modaodfweb:3.8-latest
+    restart: always
+    environment:
+      # Set local timezone to UTC+8
+      - TZ=CST-8
+    volumes:
+      - type: bind
+        source: ./modaodfweb-config
+        target: /etc/modaodfweb
+      - type: bind
+        source: ./ssl/odfweb.example.com.crt
+        target: /etc/modaodfweb/odfweb.crt
+        read_only: true
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
+      - MKNOD
+      - SYS_ADMIN
+      - SYS_CHROOT
+    ulimits:
+      # docker --ulimit does not support unlimited or large numbers · Issue #12515 · moby/moby
+      # https://github.com/moby/moby/issues/12515
+      nproc: -1
