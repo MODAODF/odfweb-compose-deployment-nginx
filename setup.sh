@@ -35,11 +35,43 @@ init(){
                     1>&2
                 continue
             fi
+
+            if [[ "${odfweb_host}" =~ ^127\. ]]; then
+                printf \
+                    'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
+                    "${odfweb_host}" \
+                    1>&2
+                continue
+            fi
         else
             if ! is_valid_domain_name "${odfweb_host}"; then
                 printf \
                     'Error: The specified domain name "%s" is invalid.\n' \
                     "${odfweb_host}" \
+                    1>&2
+                continue
+            fi
+
+            if ! odfweb_domain_resolved_raw="$(getent hosts "${odfweb_host}")"; then
+                printf \
+                    'Error: The specified domain name "%s" is not resolvable.\n' \
+                    "${odfweb_host}" \
+                    1>&2
+                continue
+            fi
+
+            if ! odfweb_domain_resolved_ip="$(echo "${odfweb_domain_resolved_raw}" | awk '{print $1}')"; then
+                printf \
+                    'Error: Unable to parse out the resolved IP address of the "%s" domain name.\n' \
+                    "${odfweb_host}" \
+                    1>&2
+                continue
+            fi
+
+            if [[ "${odfweb_domain_resolved_ip}" =~ ^127\. ]] || test "${odfweb_domain_resolved_ip}" == "::1"; then
+                printf \
+                    'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
+                    "${odfweb_domain_resolved_ip}" \
                     1>&2
                 continue
             fi
@@ -262,6 +294,12 @@ fi
 printf \
     'Info: Checking the existence of the required commands...\n'
 required_commands=(
+    # For parsing the output of the "getent" command
+    awk
+
+    # For resolving hostnames to IP addresses
+    getent
+
     # For checking international domain names
     idn
 
