@@ -178,7 +178,7 @@ init(){
     fi
 
     printf \
-        'Info: Operation completed without errors.\n'
+        'Info: Operation completed, you may now start the service by running the "docker compose up" command.\n'
 }
 
 is_ip_address() {
