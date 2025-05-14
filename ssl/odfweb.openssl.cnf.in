@@ -1,0 +1,18 @@
+# OpenSSL configuration file for creating the self-signed TLS certificate for ODFWEB
+#
+# Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+[req]
+prompt = no
+distinguished_name = dn
+req_extensions = ext
+
+[dn]
+CN = __ODFWEB_DOMAIN_NAME__
+emailAddress = invalid@ossii.com.tw
+O = 晟鑫科技股份有限公司 OSS Integral Institute Co., Ltd.
+L = Taipei
+C = TW
+
+[ext]
+subjectAltName = DNS:__ODFWEB_DOMAIN_NAME__

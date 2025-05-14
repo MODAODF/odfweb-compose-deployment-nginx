@@ -50,14 +50,14 @@ services:
     restart: always
     ports:
       - 80:80
-      - 443:443
+      - __ODFWEB_PORT_HTTPS__:443
     depends_on:
       - app
     volumes:
       # https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html
       - ./nginx.conf.d/odfweb.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./ssl/odfweb.example.com.crt:/etc/ssl/nginx/odfweb.example.com.crt:ro
-      - ./ssl/odfweb.example.com.key:/etc/ssl/nginx/odfweb.example.com.key:ro
+      - ./ssl/__ODFWEB_DOMAIN_NAME__.crt:/etc/ssl/nginx/__ODFWEB_DOMAIN_NAME__.crt:ro
+      - ./ssl/__ODFWEB_DOMAIN_NAME__.key:/etc/ssl/nginx/__ODFWEB_DOMAIN_NAME__.key:ro
     volumes_from:
       - app
 
@@ -72,7 +72,7 @@ services:
         source: ./modaodfweb-config
         target: /etc/modaodfweb
       - type: bind
-        source: ./ssl/odfweb.example.com.crt
+        source: ./ssl/__ODFWEB_DOMAIN_NAME__.crt
         target: /etc/modaodfweb/odfweb.crt
         read_only: true
     cap_add:

@@ -93,3 +93,10 @@
 *.crt
 *.key
 *.pem
+
+# Don't track template-generated files
+app.env
+docker-compose.yml
+modaodfweb-config/modaodfweb.xml
+nginx.conf.d/odfweb.conf
+odfweb.openssl.cnf
