@@ -32,7 +32,7 @@ services:
     restart: always
 
   app:
-    image: cncf-distribution.local/odfweb:fpm
+    image: cncf-distribution.local/odfweb:4-fpm
     restart: always
     depends_on:
       - db
