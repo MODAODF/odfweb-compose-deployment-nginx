@@ -36,9 +36,16 @@ Refer to the following instructions to deploy this product to the service host:
     cd /path/to/odfweb-container-deployment-nginx-X.Y.Z
     ```
 
-1. Edit [the db.env database environment file](db.env), replace the following environment variable's value placeholder text(`__REDACTED__`) to their appropriate values:
-    + `MYSQL_ROOT_PASSWORD`: The password of the "root" database user.
-    + `MYSQL_PASSWORD`: The password fo the application service database user account.
+1. If you have an existing HTTPS certificate to use, install them into [the `ssl` sub-directory](ssl/) under the following names:
+    + _domain name_.crt: X.509v3 full-chain certificate bundle(have the Intermediate CA and Root CA certificates appended after the end entity certificate) in PEM format.
+    + _domain name_.key: PKCS#8 private key in PEM format.
+1. Run the following command to setup the product:
+
+    ```bash
+    ./setup.sh
+    ```
+
+   If you don't supply your own HTTPS certificate a self-signed one will be created during this step.
 1. Run the following command to create the container from its container image and start the service:
 
     ```bash
