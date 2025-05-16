@@ -1,0 +1,25 @@
+# Rsync exclude rules for the deploy-test-environment program
+#
+# Copyright 2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Development files
+.*
+dev-utils/
+
+# Backup files
+*.backup-*
+
+# Configuration generated from templates
+docker-compose.yml
+nginx.conf.d/odfweb.conf
+modaodfweb-config/modaodfweb.xml
+ssl/odfweb.openssl.cnf
+
+# Certificates and keys
+*.pem
+*.crt
+*.key
+
+# Release/backup archives
+*.tar*
