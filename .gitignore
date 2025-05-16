@@ -96,6 +96,7 @@
 
 # Don't track template-generated files
 app.env
+db.env
 docker-compose.yml
 modaodfweb-config/modaodfweb.xml
 nginx.conf.d/odfweb.conf
