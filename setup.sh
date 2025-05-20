@@ -161,6 +161,7 @@ init(){
             break
         done
     else
+        flag_db_env_load_failed=false
         printf \
             'Info: Existing database environment file "%s" detected, using the existing values...\n' \
             "${db_environment_file}"
@@ -169,12 +170,20 @@ init(){
                 'Error: Unable to parse out the "root" MariaDB adminstrative account password from the database environment file "%s".\n' \
                 "${db_environment_file}" \
                 1>&2
-            exit 2
+            flag_db_env_load_failed=true
         fi
 
         if ! mariadb_password="$(awk -F= '/^MYSQL_PASSWORD=/ {print $2}' "${db_environment_file}")"; then
             printf \
                 'Error: Unable to parse out the ODFWEB MariaDB service account(odfweb) password from the database environment file "%s".\n' \
+                "${db_environment_file}" \
+                1>&2
+            flag_db_env_load_failed=true
+        fi
+
+        if test "${flag_db_env_load_failed}" == true; then
+            printf \
+                'Error: Unable to load existing settings from the database environment file "%s".\n' \
                 "${db_environment_file}" \
                 1>&2
             exit 2
