@@ -208,7 +208,6 @@ server {
     # Configuration for the MODAODFWEB service
     location ^~ /modaodfweb/ {
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
         proxy_pass http://editor:9980;
 
         # main websocket
