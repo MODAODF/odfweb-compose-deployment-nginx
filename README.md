@@ -70,6 +70,12 @@ The following materials are referenced in the development of this product:
   Explains the supported environment variables of the MariaDB container image.
 * [Reverse proxy settings in Nginx config (SSL termination) — Proxy settings — SDK https://sdk.collaboraonline.com/ documentation](https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html#reverse-proxy-settings-in-nginx-config-ssl-termination)  
   Explains how to configure the NGINX reverse proxy service to make it compatible with the MODAODFWEB-like services.
+* [Control startup order | Docker Docs](https://docs.docker.com/compose/how-tos/startup-order/)  
+  Explains how to make a service container only starts when its depending container is in health state.
+* [Using Healthcheck.sh - MariaDB Knowledge Base](https://mariadb.com/kb/en/using-healthcheck-sh/)  
+  Explains how to check the health status of a MariaDB container in a Compose file.
+* [Rob van Oostenrijk's reply | use serverinfo for docker healthcheck · Issue #676 · nextcloud/docker](https://github.com/nextcloud/docker/issues/676)  
+  Explains how to check the health status of a Nextcloud-like container in a Compose file.
 
 ## Licensing
 

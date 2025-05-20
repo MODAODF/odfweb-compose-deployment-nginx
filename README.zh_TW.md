@@ -70,6 +70,12 @@
   說明 MariaDB 容器映像支援的環境變數。
 * [Reverse proxy settings in Nginx config (SSL termination) — Proxy settings — SDK https://sdk.collaboraonline.com/ documentation](https://sdk.collaboraonline.com/docs/installation/Proxy_settings.html#reverse-proxy-settings-in-nginx-config-ssl-termination)  
   說明如何設定相容於類 MODAODFWEB 服務之 NGINX 反向代理服務。
+* [Control startup order | Docker Docs](https://docs.docker.com/compose/how-tos/startup-order/)  
+  說明如何設定使服務容器在其依賴容器處於健康狀態時才啟動。
+* [Using Healthcheck.sh - MariaDB Knowledge Base](https://mariadb.com/kb/en/using-healthcheck-sh/)  
+  說明如何於 Compose 設定檔中檢查 MariaDB 服務容器的健康狀態。
+* [Rob van Oostenrijk 的回應 | use serverinfo for docker healthcheck · Issue #676 · nextcloud/docker](https://github.com/nextcloud/docker/issues/676)  
+  說明如何在 Compose 設定檔中檢查類 Nextcloud 服務容器的健康狀態。
 
 ## 授權條款
 
