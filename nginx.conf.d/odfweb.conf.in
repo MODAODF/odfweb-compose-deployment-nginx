@@ -112,6 +112,11 @@ server {
     # always provides the desired behaviour.
     index index.php index.html /index.php$request_uri;
 
+    # Configuration directives for the MODAODFWEB service
+    #
+    # This directive needs to be _above_ any other Nextcloud defined `location` directives.
+    include conf.d/snippets/modaodfweb.conf;
+
     # Rule borrowed from `.htaccess` to handle Microsoft DAV clients
     location = / {
         if ( $http_user_agent ~ ^DavClnt ) {
@@ -203,32 +208,5 @@ server {
 
     location / {
         try_files $uri $uri/ /index.php$request_uri;
-    }
-
-    # Configuration for the MODAODFWEB service
-    location ^~ /modaodfweb/ {
-        proxy_set_header Host $host;
-        proxy_pass http://editor:9980;
-
-        # main websocket
-        location ~ /(c|ox)ool/(.*)/ws$ {
-            proxy_pass http://editor:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_read_timeout 36000s;
-        }
-
-        # download, presentation and image upload
-        location ~ /(c|l)ool {
-            proxy_pass http://editor:9980;
-        }
-
-        # Admin Console websocket
-        location ~ /(c|ox)ool/adminws/?$ {
-            proxy_pass http://editor:9980;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "Upgrade";
-            proxy_read_timeout 36000s;
-        }
     }
 }
