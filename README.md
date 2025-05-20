@@ -52,9 +52,11 @@ Refer to the following instructions to deploy this product to the service host:
     docker compose up -d
     ```
 
-1. Browse <https://_odfweb_hostname_or_ipaddress_/> in a Web browser to complete ODFWEB's administrative account configuration.
+1. The service is now accessible from the URL presented by the setup.sh program.
 
    If you didn't supply a browser-trustable HTTPS certificate in the previous step, you'll need to add the website to your browser's whitelist in the "Website not trusted" warning screen.
+
+   For your safety, you should reset and securely store your administrative account's password via the User menu > Personal settings > Security > Password page.
 
 ## References
 
