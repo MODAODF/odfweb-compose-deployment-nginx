@@ -109,55 +109,77 @@ init(){
         break
     done
 
-    while true; do
-        printf \
-            'Info: What is the password of the "root" MariaDB adminstrative account [_randomly generated_]? '
-        if ! read -r mariadb_root_password; then
+    db_environment_file="${script_dir}/db.env"
+    if ! test -e "${db_environment_file}"; then
+        while true; do
             printf \
-                'Error: Unable to read the password of the "root" MariaDB adminstrative account from the user.\n' \
-                1>&2
-            continue
-        fi
-
-        if test -z "${mariadb_root_password}"; then
-            if ! mariadb_root_password="$(print_random)"; then
+                'Info: What is the password of the "root" MariaDB adminstrative account [_randomly generated_]? '
+            if ! read -r mariadb_root_password; then
                 printf \
-                    'Error: Unable to generate a random password for the "root" MariaDB adminstrative account.\n' \
+                    'Error: Unable to read the password of the "root" MariaDB adminstrative account from the user.\n' \
                     1>&2
-                exit 2
+                continue
             fi
-            printf \
-                'Info: Using the randomly generated password "%s" for the "root" MariaDB adminstrative account.\n' \
-                "${mariadb_root_password}"
-            break
-        fi
-        break
-    done
 
-    while true; do
-        printf \
-            'Info: What is the password of the ODFWEB MariaDB service account(odfweb) [_randomly generated_]? '
-        if ! read -r mariadb_password; then
-            printf \
-                'Error: Unable to read the password of the ODFWEB MariaDB service account(odfweb) from the user.\n' \
-                1>&2
-            continue
-        fi
-
-        if test -z "${mariadb_password}"; then
-            if ! mariadb_password="$(print_random)"; then
+            if test -z "${mariadb_root_password}"; then
+                if ! mariadb_root_password="$(print_random)"; then
+                    printf \
+                        'Error: Unable to generate a random password for the "root" MariaDB adminstrative account.\n' \
+                        1>&2
+                    exit 2
+                fi
                 printf \
-                    'Error: Unable to generate a random password for the ODFWEB MariaDB service account(odfweb).\n' \
-                    1>&2
-                exit 2
+                    'Info: Using the randomly generated password "%s" for the "root" MariaDB adminstrative account.\n' \
+                    "${mariadb_root_password}"
+                break
             fi
-            printf \
-                'Info: Using the randomly generated password "%s" for the ODFWEB MariaDB service account(odfweb).\n' \
-                "${mariadb_password}"
             break
+        done
+
+        while true; do
+            printf \
+                'Info: What is the password of the ODFWEB MariaDB service account(odfweb) [_randomly generated_]? '
+            if ! read -r mariadb_password; then
+                printf \
+                    'Error: Unable to read the password of the ODFWEB MariaDB service account(odfweb) from the user.\n' \
+                    1>&2
+                continue
+            fi
+
+            if test -z "${mariadb_password}"; then
+                if ! mariadb_password="$(print_random)"; then
+                    printf \
+                        'Error: Unable to generate a random password for the ODFWEB MariaDB service account(odfweb).\n' \
+                        1>&2
+                    exit 2
+                fi
+                printf \
+                    'Info: Using the randomly generated password "%s" for the ODFWEB MariaDB service account(odfweb).\n' \
+                    "${mariadb_password}"
+                break
+            fi
+            break
+        done
+    else
+        printf \
+            'Info: Existing database environment file "%s" detected, using the existing values...\n' \
+            "${db_environment_file}"
+        if ! mariadb_root_password="$(awk -F= '/^MYSQL_ROOT_PASSWORD=/ {print $2}' "${db_environment_file}")"; then
+            printf \
+                'Error: Unable to parse out the "root" MariaDB adminstrative account password from the database environment file "%s".\n' \
+                "${db_environment_file}" \
+                1>&2
+            exit 2
         fi
-        break
-    done
+
+        if ! mariadb_password="$(awk -F= '/^MYSQL_PASSWORD=/ {print $2}' "${db_environment_file}")"; then
+            printf \
+                'Error: Unable to parse out the ODFWEB MariaDB service account(odfweb) password from the database environment file "%s".\n' \
+                "${db_environment_file}" \
+                1>&2
+            exit 2
+        fi
+    fi
 
     config_templates=(
         "${script_dir}/app.env.in"
