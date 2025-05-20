@@ -295,6 +295,9 @@ init(){
 
     printf \
         'Info: Operation completed, you may now start the service by running the "docker compose up" command.\n'
+    printf \
+        'Info: Your ODFWEB service will be run at this address: https://%s\n' \
+        "${odfweb_host}"
 }
 
 print_random () {
