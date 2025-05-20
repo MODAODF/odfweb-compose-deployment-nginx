@@ -190,8 +190,44 @@ init(){
         fi
     fi
 
+    app_environment_file="${script_dir}/app.env"
+    if ! test -e "${app_environment_file}"; then
+        while true; do
+            printf \
+                'Info: What is the password of the ODFWEB admin account [_randomly_generated_]? '
+            if ! read -r odfweb_admin_password; then
+                printf \
+                    'Error: Unable to read the password of the ODFWEB admin account from the user.\n' \
+                    1>&2
+                continue
+            fi
+
+            # Check if the input is empty
+            if test -z "${odfweb_admin_password}"; then
+                odfweb_admin_password="$(generate_word_passphrase 4)"
+                printf \
+                    'Info: Using "%s" as the password of the ODFWEB admin account.\n' \
+                    "${odfweb_admin_password}"
+                break
+            fi
+            break
+        done
+    else
+        printf \
+            'Info: Existing app environment file "%s" detected, using the existing values...\n' \
+            "${app_environment_file}"
+        if ! odfweb_admin_password="$(awk -F= '/^ODFWEB_ADMIN_PASSWORD=/ {print $2}' "${app_environment_file}")"; then
+            printf \
+                'Error: Unable to parse out the ODFWEB admin account password from the app environment file "%s".\n' \
+                "${app_environment_file}" \
+                1>&2
+            exit 2
+        fi
+    fi
+
     config_templates=(
         "${script_dir}/app.env.in"
+        "${script_dir}/app-hooks/post-installation/initialize-richdocuments-app.sh.in"
         "${script_dir}/db.env.in"
         "${script_dir}/docker-compose.yml.in"
         "${script_dir}/nginx.conf.d/odfweb.conf.in"
@@ -227,12 +263,25 @@ init(){
             -e "s|__ODFWEB_PORT_HTTPS__|${odfweb_port_https}|g"
             -e "s|__MYSQL_ROOT_PASSWORD__|${mariadb_root_password}|g"
             -e "s|__MYSQL_PASSWORD__|${mariadb_password}|g"
+            -e "s|__ODFWEB_ADMIN_PASSWORD__|${odfweb_admin_password}|g"
         )
         if ! sed "${sed_opts[@]}" "${template}" > "${config_file}"; then
             printf \
                 'Error: Unable to generate the configuration file "%s" from the template "%s".\n' \
                 "${config_file}" \
                 "${template}" \
+                1>&2
+            exit 2
+        fi
+    done
+
+    printf \
+        'Info: Setting execution permission for the post-installation hook...\n'
+    for hook in "${script_dir}/app-hooks/post-installation/"*.sh; do
+        if ! chmod +x "${hook}"; then
+            printf \
+                'Error: Unable to set execution permission for the post-installation hook "%s".\n' \
+                "${hook}" \
                 1>&2
             exit 2
         fi
@@ -298,6 +347,46 @@ init(){
     printf \
         'Info: Your ODFWEB service will be run at this address: https://%s\n' \
         "${odfweb_host}"
+    printf \
+        'Info: Your ODFWEB admin account: admin\n'
+    printf \
+        'Info: Your ODFWEB admin password: %s\n' \
+        "${odfweb_admin_password}"
+    printf \
+        'Info: Please change the password in the user settings web UI.\n'
+}
+
+generate_word_passphrase() {
+    local word_num="${1}"; shift
+    local wordlist="/usr/share/dict/words"
+
+    local regex_positive_integer='^[1-9][0-9]*$'
+    if ! [[ "${word_num}" =~ ${regex_positive_integer} ]]; then
+        printf 'Error (generate_word_passphrase): Number of words must be a positive integer, got "%s".\\n' "${word_num}" 1>&2
+        return 1
+    fi
+
+    local -a words=()
+    local -i i=0
+    local word_draw
+    local regex_desired_word='^[[:alpha:]]+$'
+    while (( i < word_num )); do
+        word_draw="$(shuf -n 1 "${wordlist}")"
+
+        # Lowercase the word
+        word_draw="${word_draw,,}"
+
+        if ! [[ "${word_draw}" =~ ${regex_desired_word} ]]; then
+            # Skip the word if it contains undesired characters
+            continue
+        fi
+
+        words+=("${word_draw}")
+        (( i++ ))
+    done
+
+    printf '%s\n' "${words[*]}"
+    return 0
 }
 
 print_random () {
@@ -399,6 +488,7 @@ printf \
     'Info: Checking the existence of the required commands...\n'
 required_commands=(
     # For parsing the output of the "getent" command
+    # For parsing out the existing values from the configuration files
     awk
 
     # For resolving hostnames to IP addresses
@@ -406,6 +496,8 @@ required_commands=(
 
     # For generating random passwords
     head
+    paste
+    shuf
     tr
 
     # For checking international domain names
@@ -429,6 +521,13 @@ done
 if test "${flag_required_command_check_failed}" == true; then
     printf \
         'Error: Required command check failed, please check your installation.\n' \
+        1>&2
+    exit 1
+fi
+
+if ! test -e /usr/share/dict/words; then
+    printf \
+        'Error: The wordlist file "/usr/share/dict/words" is not found, please install the "wamerican" package.\n' \
         1>&2
     exit 1
 fi

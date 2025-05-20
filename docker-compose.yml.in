@@ -24,6 +24,12 @@ services:
       - db:/var/lib/mysql
     env_file:
       - db.env
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   # Note: Redis is an external service. You can find more information about the configuration here:
   # https://hub.docker.com/_/redis
@@ -35,13 +41,22 @@ services:
     image: cncf-distribution.local/odfweb:4-fpm
     restart: always
     depends_on:
-      - db
-      - redis
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
     volumes:
       - odfweb:/var/www/html
+      - ./app-hooks/post-installation:/docker-entrypoint-hooks.d/post-installation
     env_file:
       - db.env
       - app.env
+    healthcheck:
+      test: 'runuser -s /usr/local/bin/php - www-data /var/www/html/occ status 2>/dev/null | grep -e "installed: true" -e "maintenance: false" -e "needsDbUpgrade: false" | wc -l | [ "`cat`" = "3" ]'
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 10s
 
   # Note: Nginx is an external service. You can find more information about the configuration here:
   # https://hub.docker.com/_/nginx/
@@ -52,7 +67,8 @@ services:
       - 80:80
       - __ODFWEB_PORT_HTTPS__:443
     depends_on:
-      - app
+      app:
+        condition: service_healthy
     volumes:
       # https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html
       - ./nginx.conf.d:/etc/nginx/conf.d

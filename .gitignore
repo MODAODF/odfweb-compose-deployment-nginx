@@ -96,6 +96,7 @@
 
 # Don't track template-generated files
 app.env
+app-hooks/post-installation/initialize-richdocuments-app.sh
 db.env
 docker-compose.yml
 modaodfweb-config/modaodfweb.xml

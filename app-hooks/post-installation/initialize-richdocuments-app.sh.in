@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Initialize the richdocuments ODFWEB app
+#
+# Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+if ! set -eu; then
+    printf 'Error: Unable to configure defensive interpreter behaviors.\n' >&2
+    exit 2
+fi
+
+# Enable the richdocuments app by default
+if ! php occ app:enable richdocuments; then
+    printf 'Error: Unable to enable the richdocuments app.\n' >&2
+    exit 2
+fi
+
+# Configure the default connection details
+# if ! php occ config:app:set richdocuments public_wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__:443'; then
+#     printf 'Error: Unable to configure the public WOPI URL of the MODAODFWEB service.\n' >&2
+#     exit 2
+# fi
+
+if ! php occ config:app:set richdocuments wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__/'; then
+    printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
+    exit 2
+fi
+
+if ! php occ config:app:set richdocuments disable_certificate_verification --value yes; then
+    printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
+    exit 2
+fi
