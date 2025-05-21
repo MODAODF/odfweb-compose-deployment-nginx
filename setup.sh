@@ -114,9 +114,10 @@ init(){
         while true; do
             printf \
                 'Info: What is the password of the "root" MariaDB adminstrative account [_randomly generated_]? '
-            if ! read -r mariadb_root_password; then
+            if ! read -rs mariadb_root_password; then
+                # NOTE: In silent mode the user-inputted newline won't be printed
                 printf \
-                    'Error: Unable to read the password of the "root" MariaDB adminstrative account from the user.\n' \
+                    '\nError: Unable to read the password of the "root" MariaDB adminstrative account from the user.\n' \
                     1>&2
                 continue
             fi
@@ -124,24 +125,26 @@ init(){
             if test -z "${mariadb_root_password}"; then
                 if ! mariadb_root_password="$(print_random)"; then
                     printf \
-                        'Error: Unable to generate a random password for the "root" MariaDB adminstrative account.\n' \
+                        '\nError: Unable to generate a random password for the "root" MariaDB adminstrative account.\n' \
                         1>&2
                     exit 2
                 fi
                 printf \
-                    'Info: Using the randomly generated password "%s" for the "root" MariaDB adminstrative account.\n' \
+                    '\nInfo: Using the randomly generated password "%s" for the "root" MariaDB adminstrative account.\n' \
                     "${mariadb_root_password}"
                 break
             fi
+            printf '\n'
             break
         done
 
         while true; do
             printf \
                 'Info: What is the password of the ODFWEB MariaDB service account(odfweb) [_randomly generated_]? '
-            if ! read -r mariadb_password; then
+            if ! read -rs mariadb_password; then
+                # NOTE: In silent mode the user-inputted newline won't be printed
                 printf \
-                    'Error: Unable to read the password of the ODFWEB MariaDB service account(odfweb) from the user.\n' \
+                    '\nError: Unable to read the password of the ODFWEB MariaDB service account(odfweb) from the user.\n' \
                     1>&2
                 continue
             fi
@@ -149,12 +152,12 @@ init(){
             if test -z "${mariadb_password}"; then
                 if ! mariadb_password="$(print_random)"; then
                     printf \
-                        'Error: Unable to generate a random password for the ODFWEB MariaDB service account(odfweb).\n' \
+                        '\nError: Unable to generate a random password for the ODFWEB MariaDB service account(odfweb).\n' \
                         1>&2
                     exit 2
                 fi
                 printf \
-                    'Info: Using the randomly generated password "%s" for the ODFWEB MariaDB service account(odfweb).\n' \
+                    '\nInfo: Using the randomly generated password "%s" for the ODFWEB MariaDB service account(odfweb).\n' \
                     "${mariadb_password}"
                 break
             fi
@@ -195,9 +198,10 @@ init(){
         while true; do
             printf \
                 'Info: What is the password of the ODFWEB admin account [_randomly_generated_]? '
-            if ! read -r odfweb_admin_password; then
+            if ! read -rs odfweb_admin_password; then
+                # NOTE: In silent mode the user-inputted newline won't be printed
                 printf \
-                    'Error: Unable to read the password of the ODFWEB admin account from the user.\n' \
+                    '\nError: Unable to read the password of the ODFWEB admin account from the user.\n' \
                     1>&2
                 continue
             fi
@@ -206,7 +210,7 @@ init(){
             if test -z "${odfweb_admin_password}"; then
                 odfweb_admin_password="$(generate_word_passphrase 4)"
                 printf \
-                    'Info: Using "%s" as the password of the ODFWEB admin account.\n' \
+                    '\nInfo: Using "%s" as the password of the ODFWEB admin account.\n' \
                     "${odfweb_admin_password}"
                 break
             fi
@@ -566,7 +570,7 @@ printf \
     'Info: Setting the ERR trap...\n'
 trap_err(){
     printf \
-        'Error: The program has encountered an unhandled error and is prematurely aborted.\n' \
+        '\nError: The program has encountered an unhandled error and is prematurely aborted.\n' \
         1>&2
 }
 if ! trap trap_err ERR; then
