@@ -374,7 +374,7 @@ generate_word_passphrase() {
     local -i i=0
     local word_draw
     local regex_desired_word='^[[:alpha:]]+$'
-    while (( i < word_num )); do
+    while test "${i}" -lt "${word_num}"; do
         word_draw="$(shuf -n 1 "${wordlist}")"
 
         # Lowercase the word
@@ -386,7 +386,7 @@ generate_word_passphrase() {
         fi
 
         words+=("${word_draw}")
-        (( i++ ))
+        i="$(( i + 1 ))"
     done
 
     printf '%s\n' "${words[*]}"
