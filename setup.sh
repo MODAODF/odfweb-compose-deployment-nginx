@@ -229,6 +229,14 @@ init(){
         fi
     fi
 
+    # Don't give others access to the secret files
+    if ! umask 177; then
+        printf \
+            'Error: Unable to configure a secure default file creation permissions(umask).\n' \
+            1>&2
+        exit 2
+    fi
+
     config_templates=(
         "${script_dir}/app.env.in"
         "${script_dir}/app-hooks/post-installation/initialize-richdocuments-app.sh.in"
