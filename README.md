@@ -58,6 +58,90 @@ Refer to the following instructions to deploy this product to the service host:
 
    For your safety, you should reset and securely store your administrative account's password via the User menu > Personal settings > Security > Password page.
 
+## Operations
+
+The following sections documents noteworthy information for maintaining the containerized service:
+
+### Common operations
+
+This section documents common operations regarding this service deployment:
+
+#### Start the service
+
+Refer to the following instructions to start the service:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. Run the following commands to start the service:
+
+    ```bash
+    docker compose start
+    ```
+
+#### Stop the service
+
+Refer to the following instructions to stop the service:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. Run the following commands to stop the service:
+
+    ```bash
+    docker compose stop
+    ```
+
+#### Restart the service
+
+Refer to the following instructions to restart the service:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. Run the following commands to restart the service:
+
+    ```bash
+    docker compose restart
+    ```
+
+#### Check the service logs
+
+Refer to the following instructions to stop the service:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. Run the following command to check the specified service logs:
+
+    ```bash
+    docker compose logs \
+        --tail=100 \
+        "${docker_logs_opts[@]}" \
+        _Compose service identifier_
+    ```
+
+   Please replace the \_Compose service identifier\_ placeholder to the actual service identifier:
+
+    + `app`: ODFWEB + PHP-FPM service.
+    + `db`: MariaDB database service.
+    + `redis`: Redis database service.
+    + `web`: NGINX reverse proxy service.
+    + `editor`: MODAODFWEB document editor service.
+
+   Explanation of the command options used in the `docker compose logs` command:
+
+    + `--tail=100`: Show the last 100 log entries
+    + (Optional) `--follow`: Follow and print new log entries to the stdout
+
+#### Destroy the service container
+
+Refer to the following instructions to destroy the service container:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. Run the following commands:
+
+    ```bash
+    docker compose down
+    ```
+
 ## References
 
 The following materials are referenced in the development of this product:
