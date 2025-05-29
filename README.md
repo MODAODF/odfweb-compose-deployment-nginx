@@ -70,7 +70,7 @@ This section documents common operations regarding this service deployment:
 
 Refer to the following instructions to start the service:
 
-1. Launch a text terminal
+1. Launch a text terminal.
 1. Change the working directory to the directory that hosts this document.
 1. Run the following commands to start the service:
 
@@ -82,7 +82,7 @@ Refer to the following instructions to start the service:
 
 Refer to the following instructions to stop the service:
 
-1. Launch a text terminal
+1. Launch a text terminal.
 1. Change the working directory to the directory that hosts this document.
 1. Run the following commands to stop the service:
 
@@ -94,7 +94,7 @@ Refer to the following instructions to stop the service:
 
 Refer to the following instructions to restart the service:
 
-1. Launch a text terminal
+1. Launch a text terminal.
 1. Change the working directory to the directory that hosts this document.
 1. Run the following commands to restart the service:
 
@@ -106,7 +106,7 @@ Refer to the following instructions to restart the service:
 
 Refer to the following instructions to stop the service:
 
-1. Launch a text terminal
+1. Launch a text terminal.
 1. Change the working directory to the directory that hosts this document.
 1. Run the following command to check the specified service logs:
 
@@ -127,8 +127,8 @@ Refer to the following instructions to stop the service:
 
    Explanation of the command options used in the `docker compose logs` command:
 
-    + `--tail=100`: Show the last 100 log entries
-    + (Optional) `--follow`: Follow and print new log entries to the stdout
+    + `--tail=100`: Show the last 100 log entries.
+    + (Optional) `--follow`: Follow and print new log entries to the stdout.
 
 #### Destroy the service container
 
