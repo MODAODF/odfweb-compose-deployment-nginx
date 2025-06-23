@@ -229,6 +229,7 @@ init(){
         fi
     fi
 
+    original_umask="$(umask)"
     # Don't give others access to the secret files
     if ! umask 177; then
         printf \
@@ -286,11 +287,17 @@ init(){
             exit 2
         fi
     done
+    if ! umask "${original_umask}"; then
+        printf \
+            'Error: Unable to restore the original file creation permissions(umask).\n' \
+            1>&2
+        exit 2
+    fi
 
     printf \
         'Info: Setting execution permission for the post-installation hook...\n'
     for hook in "${script_dir}/app-hooks/post-installation/"*.sh; do
-        if ! chmod +x "${hook}"; then
+        if ! chmod 0755 "${hook}"; then
             printf \
                 'Error: Unable to set execution permission for the post-installation hook "%s".\n' \
                 "${hook}" \
