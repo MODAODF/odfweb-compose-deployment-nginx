@@ -46,7 +46,7 @@ services:
       redis:
         condition: service_started
     volumes:
-      - odfweb:/var/www/html
+      - ./odfweb-html:/var/www/html
       - ./app-hooks/post-installation:/docker-entrypoint-hooks.d/post-installation
     env_file:
       - db.env
