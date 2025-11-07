@@ -11,7 +11,7 @@ dev-utils/
 *.backup-*
 
 # Configuration generated from templates
-docker-compose.yml
+compose.yml
 nginx.conf.d/odfweb.conf
 modaodfweb-config/modaodfweb.xml
 ssl/odfweb.openssl.cnf
