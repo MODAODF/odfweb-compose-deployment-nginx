@@ -229,7 +229,12 @@ init(){
         fi
     fi
 
-    original_umask="$(umask)"
+    if ! original_umask="$(umask)"; then
+        printf \
+            'Error: Unable to query the original umask value.\n' \
+            1>&2
+        exit 2
+    fi
     # Don't give others access to the secret files
     if ! umask 177; then
         printf \
