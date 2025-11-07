@@ -38,7 +38,7 @@ services:
     restart: always
 
   app:
-    image: cncf-distribution.local/odfweb:4-fpm
+    image: cncf-distribution.infra.ossii.com.tw/odfweb:4-fpm
     restart: always
     depends_on:
       db:
@@ -78,7 +78,7 @@ services:
       - app
 
   editor:
-    image: cncf-distribution.local/modaodfweb:3.8-latest
+    image: cncf-distribution.infra.ossii.com.tw/modaodfweb:3.8-latest
     restart: always
     environment:
       # Set local timezone to UTC+8
