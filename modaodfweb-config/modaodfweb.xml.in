@@ -110,7 +110,7 @@
             See also: https://docs.libreoffice.org/sal/html/sal_log.html
         -->
         <lokit_sal_log type="string" desc="Fine tune log messages from LOKit. Default is to suppress log messages from LOKit." default="-INFO-WARN">-INFO-WARN</lokit_sal_log>
-        <file enable="true">
+        <file enable="false">
             <!-- If you use other path than /var/log and you run modaodfweb from systemd, make sure that you enable that path in modaodfweb.service (ReadWritePaths). -->
             <property name="path" desc="Log file path.">/var/log/modaodfweb.log</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>

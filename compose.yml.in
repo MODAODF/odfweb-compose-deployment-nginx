@@ -96,6 +96,11 @@ services:
         source: ./ssl/__ODFWEB_DOMAIN_NAME__.crt
         target: /etc/modaodfweb/odfweb.crt
         read_only: true
+      # Set /config/logging/file@enable to true in the config if you want to
+      # read the logs in the admin console(will increase I/O load)
+      #- type: bind
+        #source: ./modaodfweb-logs
+        #target: /var/log
     cap_add:
       - CHOWN
       - DAC_OVERRIDE

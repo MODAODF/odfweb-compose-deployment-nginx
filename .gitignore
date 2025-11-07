@@ -105,3 +105,6 @@ odfweb.openssl.cnf
 
 # Don't track odfweb site files
 /odfweb-html
+
+# Don't track Online logs bind mount
+/modaodfweb-logs/
