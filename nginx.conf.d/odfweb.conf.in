@@ -43,6 +43,9 @@ server {
     ssl_certificate     /etc/ssl/nginx/__ODFWEB_DOMAIN_NAME__.crt;
     ssl_certificate_key /etc/ssl/nginx/__ODFWEB_DOMAIN_NAME__.key;
 
+    # Automatically redirect HTTP clients to use HTTPS instead
+    error_page 497 https://$host:$server_port$request_uri;
+
     # Prevent nginx HTTP Server Detection
     server_tokens off;
 
