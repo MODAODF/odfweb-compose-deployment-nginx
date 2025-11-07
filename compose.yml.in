@@ -41,7 +41,7 @@ services:
       - redis:/data
 
   app:
-    image: cncf-distribution.infra.ossii.com.tw/odfweb:4-fpm
+    image: cncf-distribution.infra.ossii.com.tw/odfweb:5.0.0-fpm
     restart: always
     depends_on:
       db:
