@@ -11,6 +11,7 @@ name: odfweb-nginx
 volumes:
   odfweb:
   db:
+  redis:
 
 services:
   # Note: MariaDB is an external service. You can find more information about the configuration here:
@@ -36,6 +37,8 @@ services:
   redis:
     image: redis:alpine
     restart: always
+    volumes:
+      - redis:/data
 
   app:
     image: cncf-distribution.infra.ossii.com.tw/odfweb:4-fpm
