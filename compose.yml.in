@@ -10,6 +10,7 @@
 name: odfweb-nginx
 volumes:
   db:
+  odfweb:
   redis:
 
 services:
@@ -50,6 +51,7 @@ services:
       redis:
         condition: service_started
     volumes:
+      - odfweb:/var/www/html
       - ./apps:/var/www/html/custom_apps
       - ./config:/var/www/html/config
       - ./data:/var/www/html/data
