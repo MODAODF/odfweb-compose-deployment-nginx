@@ -15,12 +15,6 @@ if ! php occ app:enable richdocuments; then
     exit 2
 fi
 
-# Configure the default connection details
-# if ! php occ config:app:set richdocuments public_wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__:443'; then
-#     printf 'Error: Unable to configure the public WOPI URL of the MODAODFWEB service.\n' >&2
-#     exit 2
-# fi
-
 if ! php occ config:app:set richdocuments wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__/'; then
     printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
     exit 2
