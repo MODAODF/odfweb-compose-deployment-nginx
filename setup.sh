@@ -283,6 +283,20 @@ init(){
             -e "s|__MYSQL_PASSWORD__|${mariadb_password}|g"
             -e "s|__ODFWEB_ADMIN_PASSWORD__|${odfweb_admin_password}|g"
         )
+
+        if test "${odfweb_port_https}" -eq 443; then
+            if ! odfweb_host_regex="$(get_host_regex "${odfweb_host}")"; then
+                printf \
+                    'Error: Unable to convert the "%s" host to regular expression.\n' \
+                    "${odfweb_host}" \
+                    1>&2
+                exit 2
+            fi
+
+            # Drop port specification for typical HTTPS port number
+            sed_opts+=(-e "s|${odfweb_host_regex}:${odfweb_port_https}|${odfweb_host}|g")
+        fi
+
         if ! sed "${sed_opts[@]}" "${template}" > "${config_file}"; then
             printf \
                 'Error: Unable to generate the configuration file "%s" from the template "%s".\n' \
@@ -378,6 +392,19 @@ init(){
         "${odfweb_admin_password}"
     printf \
         'Info: Please change the password in the user settings web UI.\n'
+}
+
+# Convert host name to proper regular expression
+get_host_regex(){
+    local host="${1}"; shift
+
+    local result
+
+    # Convert . to \.
+    host="${host//./\\.}"
+
+    result="${host}"
+    printf '%s' "${result}"
 }
 
 generate_word_passphrase() {
