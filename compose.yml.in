@@ -53,7 +53,7 @@ services:
       - ./apps:/var/www/html/custom_apps
       - ./config:/var/www/html/config
       - ./data:/var/www/html/data
-      - ./theme:/var/www/html/themes/custom
+      #- ./theme:/var/www/html/themes/custom
       - ./app-hooks/post-installation:/docker-entrypoint-hooks.d/post-installation
     env_file:
       - db.env
