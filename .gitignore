@@ -103,8 +103,11 @@ modaodfweb-config/modaodfweb.xml
 nginx.conf.d/odfweb.conf
 odfweb.openssl.cnf
 
-# Don't track odfweb site files
-/odfweb-html
-
 # Don't track Online logs bind mount
 /modaodfweb-logs/
+
+# Don't track volumes
+/config/
+/data/
+/apps/
+/theme/
