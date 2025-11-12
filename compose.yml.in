@@ -50,6 +50,9 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+    # Workaround domain name resolution in /etc/hosts on the container host not working
+    extra_hosts:
+      - "__ODFWEB_DOMAIN_NAME__:host-gateway"
     volumes:
       - odfweb:/var/www/html
       - ./apps:/var/www/html/custom_apps
@@ -92,6 +95,9 @@ services:
     environment:
       # Set local timezone to UTC+8
       - TZ=CST-8
+    # Workaround domain name resolution in /etc/hosts on the container host not working
+    extra_hosts:
+      - "__ODFWEB_DOMAIN_NAME__:host-gateway"
     volumes:
       - type: bind
         source: ./modaodfweb-config
