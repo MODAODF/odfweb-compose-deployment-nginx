@@ -15,12 +15,70 @@ if ! php occ app:enable richdocuments; then
     exit 2
 fi
 
-if ! php occ config:app:set richdocuments wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__/'; then
+wopi_url='https://__ODFWEB_DOMAIN_NAME__'
+if ! php occ config:app:set richdocuments wopi_url --value "${wopi_url}"; then
     printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
     exit 2
 fi
 
 if ! php occ config:app:set richdocuments disable_certificate_verification --value yes; then
     printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
+    exit 2
+fi
+
+printf "Info: Workarounding oxooldocuments breaks when the backend data isn't available...\\n"
+if ! instance_id="$(php occ config:system:get instanceid)"; then
+    printf \
+        'Error: Unable to query the instance ID of ODFWEB.\n' \
+        1>&2
+    exit 2
+fi
+
+appdata_dir="/var/www/html/data/appdata_${instance_id}"
+oxooldocuments_remotedata_dir="${appdata_dir}/richdocuments/remoteData"
+oxooldocuments_backend_capabilities_file="${oxooldocuments_remotedata_dir}/capabilities"
+oxooldocuments_backend1_discovery_file="${oxooldocuments_remotedata_dir}/discovery_server_1"
+
+# At the current point of time the reverse proxy service isn't available
+wopi_url_reachable=http://editor:9980
+wopi_capabilities_url="${wopi_url_reachable}/hosting/capabilities"
+wopi_discovery_url="${wopi_url_reachable}/hosting/discovery"
+
+mkdir_opts=(
+    --parents
+    --verbose
+)
+if ! mkdir "${mkdir_opts[@]}" "${oxooldocuments_remotedata_dir}"; then
+    printf \
+        'Error: Unable to create the oxooldocuments remote data directory.\n' \
+        1>&2
+    exit 2
+fi
+
+curl_opts_common=(
+    --silent
+    --show-error
+    --fail
+)
+
+curl_opts_common_capabilities=(
+    "${curl_opts_common[@]}"
+    --output "${oxooldocuments_backend_capabilities_file}"
+)
+if ! curl "${curl_opts_common_capabilities[@]}" "${wopi_capabilities_url}"; then
+    printf \
+        'Error: Unable to write the WOPI capabilities file.\n' \
+        1>&2
+    exit 2
+fi
+
+curl_opts_common_discovery=(
+    "${curl_opts_common[@]}"
+    --output "${oxooldocuments_backend1_discovery_file}"
+)
+if ! curl "${curl_opts_common_discovery[@]}" "${wopi_discovery_url}"; then
+    printf \
+        'Error: Unable to write the WOPI discovery file.\n' \
+        1>&2
     exit 2
 fi
