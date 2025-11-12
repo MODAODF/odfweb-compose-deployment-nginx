@@ -142,6 +142,29 @@ Refer to the following instructions to destroy the service container:
     docker compose down
     ```
 
+### DESTRUCTIVE OPERATIONS
+
+The following operations are DESTRUCTIVE and may RESULT IN DATA LOSS.  Please ensure you have a valid backup of your data before proceeding:
+
+#### Drop all data associated with this service deployment
+
+Refer to the following instructions to drop all data associated with this service deployment:
+
+1. Launch a text terminal
+1. Change the working directory to the directory that hosts this document.
+1. [Destroy the service container](#destroy-the-service-container).
+1. Run the following commands to delete all data in the named volumes:
+
+    ```bash
+    docker volume rm odfweb-nginx_{db,odfweb,redis}
+    ```
+
+1. Run the following commands _as root_ to delete all datas in the bind-mounted directories:
+
+    ```bash
+    rm -rvf {apps,config,data,theme}
+    ```
+
 ## References
 
 The following materials are referenced in the development of this product:
