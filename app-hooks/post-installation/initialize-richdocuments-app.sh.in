@@ -15,12 +15,8 @@ if ! php occ app:enable richdocuments; then
     exit 2
 fi
 
-if ! php occ config:app:set richdocuments wopi_url --value 'https://__ODFWEB_DOMAIN_NAME__/'; then
-    printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
-    exit 2
-fi
-
-if ! php occ config:app:set richdocuments disable_certificate_verification --value yes; then
+# NOTE: This will work as client fetches editor URL via the server_name editor config, not from here
+if ! php occ richdocuments:activate-config --wopi-url='http://editor:9980/'; then
     printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
     exit 2
 fi
