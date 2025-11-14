@@ -243,6 +243,11 @@ init(){
         exit 2
     fi
 
+    # In the replacement portion of the `s` sed command `&` represents
+    # the entire match of the regular expression from the pattern portion.
+    mariadb_root_password_literal="${mariadb_root_password//&/\\&}"
+    mariadb_password_literal="${mariadb_password//&/\\&}"
+
     config_templates=(
         "${script_dir}/app.env.in"
         "${script_dir}/app-hooks/post-installation/initialize-richdocuments-app.sh.in"
@@ -279,8 +284,8 @@ init(){
         sed_opts=(
             -e "s|__ODFWEB_DOMAIN_NAME__|${odfweb_host}|g"
             -e "s|__ODFWEB_PORT_HTTPS__|${odfweb_port_https}|g"
-            -e "s|__MYSQL_ROOT_PASSWORD__|${mariadb_root_password}|g"
-            -e "s|__MYSQL_PASSWORD__|${mariadb_password}|g"
+            -e "s|__MYSQL_ROOT_PASSWORD__|${mariadb_root_password_literal}|g"
+            -e "s|__MYSQL_PASSWORD__|${mariadb_password_literal}|g"
             -e "s|__ODFWEB_ADMIN_PASSWORD__|${odfweb_admin_password}|g"
         )
 
