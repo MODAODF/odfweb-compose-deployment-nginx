@@ -1,8 +1,8 @@
-# Container deployment of the ODFWEB service(NGINX+FPM variant)
+# Compose container deployment of the ODFWEB service(NGINX+FPM variant)
 
 Rapidly deploy a ODFWEB service(NGINX+FPM variant) that meets your requirements.
 
-<https://github.com/MODAODF/odfweb-compose-deployment-nginx>  
+<https://www.ossii.com.tw/git/buoren/odfweb-compose-deployment-nginx>  
 [![pre-commit enabled badge](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white "This project uses pre-commit to check potential problems")](https://pre-commit.com/)
 
 English [台灣中文](README.zh_TW.md)
@@ -18,7 +18,7 @@ The following requirements must be met in order to use this product:
 
 Refer to the following instructions to deploy this product to the service host:
 
-1. Download the release package from [the product's Releases page](https://github.com/MODAODF/odfweb-compose-deployment-nginx/releases).
+1. Download the release package from [the product's Releases page](https://www.ossii.com.tw/git/buoren/odfweb-compose-deployment-nginx/releases).
 1. Upload the product release package to the service host.
 1. Aquire a command-line interface of the service host.
 1. Run the following command to extract the product release package:
@@ -27,13 +27,13 @@ Refer to the following instructions to deploy this product to the service host:
     tar \
         --extract \
         --verbose \
-        --file /path/to/odfweb-container-deployment-nginx-X.Y.Z.tar.gz
+        --file /path/to/odfweb-compose-deployment-nginx-X.Y.Z.tar.gz
     ```
 
 1. Run the following command to change the working directory to the extracted product directory:
 
     ```bash
-    cd /path/to/odfweb-container-deployment-nginx-X.Y.Z
+    cd /path/to/odfweb-compose-deployment-nginx-X.Y.Z
     ```
 
 1. If you have an existing HTTPS certificate to use, install them into [the `ssl` sub-directory](ssl/) under the following names:
