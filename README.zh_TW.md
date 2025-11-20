@@ -2,7 +2,7 @@
 
 快速地部署一個符合需求的 ODFWEB 服務（NGINX+FPM 變體）
 
-<https://www.ossii.com.tw/git/buoren/odfweb-compose-deployment-nginx>  
+<https://github.com/MODAODF/odfweb-compose-deployment-nginx>  
 [![pre-commit 框架已引入標誌](https://img.shields.io/badge/pre--commit-已引入-brightgreen?logo=pre-commit&logoColor=white "鄙專案使用 pre-commit 框架來檢查潛在問題")](https://pre-commit.com/)
 
 [English](README.md) 台灣中文
@@ -18,7 +18,7 @@
 
 參閱下列指示以將本產品部署到服務主機上：
 
-1. 於[本產品的釋出頁](https://www.ossii.com.tw/git/buoren/odfweb-compose-deployment-nginx/releases)下載釋出包。
+1. 於[本產品的釋出頁](https://github.com/MODAODF/odfweb-compose-deployment-nginx/releases)下載釋出包。
 1. 將釋出包上傳至服務主機上。
 1. 取得服務主機的命令列界面。
 1. 執行下列命令以解開產品釋出包：
