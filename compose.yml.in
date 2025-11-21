@@ -41,7 +41,7 @@ services:
       - redis:/data
 
   app:
-    image: cncf-distribution.infra.ossii.com.tw/odfweb:5.0.0-fpm
+    image: ossiidev/odfweb:5.0.0-fpm
     restart: always
     depends_on:
       editor:
@@ -90,7 +90,7 @@ services:
       - app
 
   editor:
-    image: cncf-distribution.infra.ossii.com.tw/modaodfweb:3.8.4
+    image: ossiidev/modaodfweb:3.8.4
     restart: always
     environment:
       # Set local timezone to UTC+8
