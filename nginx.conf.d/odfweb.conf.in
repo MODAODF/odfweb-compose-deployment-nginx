@@ -155,6 +155,7 @@ server {
     # Rules borrowed from `.htaccess` to hide certain paths from clients
     location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)(?:$|/)  { return 404; }
     location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console)                { return 404; }
+    location ~ \.env$              { return 404; }
 
     # Ensure this block, which passes PHP files to the PHP process, is above the blocks
     # which handle static assets (as seen below). If this block is not declared first,
