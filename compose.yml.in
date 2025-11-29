@@ -13,6 +13,12 @@ volumes:
   odfweb:
   redis:
 
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: '192.168.213.0/24'
+
 services:
   # Note: MariaDB is an external service. You can find more information about the configuration here:
   # https://hub.docker.com/_/mariadb

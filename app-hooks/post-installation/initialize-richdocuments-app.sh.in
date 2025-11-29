@@ -31,3 +31,8 @@ if ! php occ config:app:set richdocuments disable_certificate_verification --val
     printf 'Error: Unable to configure the WOPI URL of the MODAODFWEB service.\n' >&2
     exit 2
 fi
+
+if ! php occ config:app:set richdocuments wopi_allowlist --value 192.168.213.0/24; then
+    printf 'Error: Unable to configure the WOPI allowlist of the MODAODFWEB service.\n' >&2
+    exit 2
+fi
