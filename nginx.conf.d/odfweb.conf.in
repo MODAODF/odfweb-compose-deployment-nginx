@@ -1,6 +1,6 @@
 # Drop-in NGINX configuration for ODFWEB
 #
-# Copyright 2024 Nextcloud community and @josh4trunks <https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html>
+# Copyright 2025 Nextcloud community and @josh4trunks <https://docs.nextcloud.com/server/latest/admin_manual/installation/nginx.html>
 # Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 #
@@ -180,13 +180,19 @@ server {
         fastcgi_pass php-handler;
 
         fastcgi_intercept_errors on;
-        fastcgi_request_buffering off;
+        fastcgi_request_buffering on;                   # Required as PHP-FPM does not support chunked transfer encoding and requires a valid ContentLength header.
+
+        # PHP-FPM 504 response timeouts
+        # Uncomment and increase these if facing timeout errors during large file uploads
+        #fastcgi_read_timeout 60s;
+        #fastcgi_send_timeout 60s;
+        #fastcgi_connect_timeout 60s;
 
         fastcgi_max_temp_file_size 0;
     }
 
     # Serve static files
-    location ~ \.(?:css|js|mjs|svg|gif|ico|jpg|png|webp|wasm|tflite|map|ogg|flac)$ {
+    location ~ \.(?:css|js|mjs|svg|gif|ico|jpg|png|webp|wasm|tflite|map|ogg|flac|mp4|webm)$ {
         try_files $uri /index.php$request_uri;
         # HTTP response headers borrowed from Nextcloud `.htaccess`
         add_header Cache-Control                     "public, max-age=15778463$asset_immutable";
@@ -195,7 +201,6 @@ server {
         add_header X-Frame-Options                   "SAMEORIGIN"        always;
         add_header X-Permitted-Cross-Domain-Policies "none"              always;
         add_header X-Robots-Tag                      "noindex, nofollow" always;
-        add_header X-XSS-Protection                  "1; mode=block"     always;
         access_log off;     # Optional: Don't log access to assets
     }
 
