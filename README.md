@@ -11,7 +11,13 @@ English [台灣中文](README.zh_TW.md)
 
 The following requirements must be met in order to use this product:
 
-* The service host must have a recent version of the Docker Engine(or its equivalent alternatives) software installed.
+* The service host must have the following software installed:
+    + awk
+    + A recent version of the Docker Engine(or its equivalent alternatives) software.
+    + sed
+    + The /usr/share/dict/words wordlist file:
+        - Debian-based Linux distributions: provided by the `wamerican` package.
+        - Red Hat-based Linux distributions: provided by the `words` package.
 * During the service deployment the service host must have access to the Docker Hub registry service.
 
 ## Usage

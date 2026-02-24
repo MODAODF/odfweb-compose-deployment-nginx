@@ -11,7 +11,13 @@
 
 在使用本產品前您應先滿足下列條件：
 
-* 服務主機須已安裝近期版本之 Docker Engine（或其功能對等之）軟體。
+* 服務主機須已安裝下列軟體：
+    + awk
+    + 近期版本之 Docker Engine（或其功能對等之）軟體
+    + sed
+    + /usr/share/dict/words 詞庫檔案：
+        - Debian 系 Linux 作業系統：由 wamerican 軟體包提供
+        - Red Hat 系 Linux 作業系統：由 words 軟體包提供
 * 在部署服務期間服務主機須有 Docker Hub 容器映像註冊服務之存取能力。
 
 ## 使用說明
