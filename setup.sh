@@ -44,7 +44,7 @@ init(){
                 continue
             fi
         else
-            if ! is_valid_domain_name "${odfweb_host}"; then
+            if ! is_valid_domain_name "${idn_command}" "${odfweb_host}"; then
                 printf \
                     'Error: The specified domain name "%s" is invalid.\n' \
                     "${odfweb_host}" \
@@ -497,14 +497,15 @@ is_valid_ip_address() {
 }
 
 is_valid_domain_name() {
-    local domain_name="$1"
+    local idn_command="${1}"; shift
+    local domain_name="${1}"; shift
 
     if [ "${#domain_name}" -gt 253 ]; then
         return 1
     fi
 
     local ascii_domain
-    if ! ascii_domain="$(idn --quiet --allow-unassigned --no-tld -a "${domain_name}" 2>/dev/null)"; then
+    if ! ascii_domain="$("${idn_command}" --quiet --allow-unassigned --no-tld -a "${domain_name}" 2>/dev/null)"; then
         return 1
     fi
 
@@ -556,9 +557,6 @@ required_commands=(
     shuf
     tr
 
-    # For checking international domain names
-    idn
-
     realpath
 
     # For generating configuration files from templates
@@ -577,6 +575,27 @@ done
 if test "${flag_required_command_check_failed}" == true; then
     printf \
         'Error: Required command check failed, please check your installation.\n' \
+        1>&2
+    exit 1
+fi
+
+# For checking international domain names
+idn_command=
+idn_commands=(
+    idn
+    idn2
+)
+for command in "${idn_commands[@]}"; do
+    if command -v "${command}" >/dev/null; then
+        # shellcheck disable=SC2034
+        idn_command="${command}"
+        break
+    fi
+done
+
+if test -z "${idn_command}"; then
+    printf \
+        'Error: This program requires the "idn/idn2" command to be available in your command search PATHs, but it is not found.\n' \
         1>&2
     exit 1
 fi
