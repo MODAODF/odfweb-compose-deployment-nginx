@@ -96,7 +96,7 @@ services:
       - app
 
   editor:
-    image: ossiidev/modaodfweb:3.8.4
+    image: ossiidev/modaodfweb:3.8.5
     restart: always
     environment:
       # Set local timezone to UTC+8
