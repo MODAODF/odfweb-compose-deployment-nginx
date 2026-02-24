@@ -602,7 +602,7 @@ fi
 
 if ! test -e /usr/share/dict/words; then
     printf \
-        'Error: The wordlist file "/usr/share/dict/words" is not found, please install the "wamerican" package.\n' \
+        'Error: The wordlist file "/usr/share/dict/words" is not found, please install the "wamerican/words" package.\n' \
         1>&2
     exit 1
 fi
