@@ -4,110 +4,121 @@
 # Copyright 2025 Buo-ren Lin (OSSII) <buoren@ossii.com.tw>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
+ODFWEB_HOST="${ODFWEB_HOST:-}"
+ODFWEB_PORT_HTTPS="${ODFWEB_PORT_HTTPS:-}"
+
 init(){
     operation_timestamp="$(printf '%(%Y%m%d-%H%M%S)T\n')"
 
-    printf \
-        'Info: Please answer the following questions to setup the product environment.\n'
-    while true; do
+    if test -n "${ODFWEB_HOST}"; then
+        odfweb_host="${ODFWEB_HOST}"
+    else
         printf \
-            'Info: What is the host/domain name of the ODFWEB service [odfweb.example.com]? '
-        if ! read -r odfweb_host; then
+            'Info: Please answer the following questions to setup the product environment.\n'
+        while true; do
             printf \
-                'Error: Unable to read the host/domain name of the ODFWEB service.\n' \
-                1>&2
-            continue
-        fi
+                'Info: What is the host/domain name of the ODFWEB service [odfweb.example.com]? '
+            if ! read -r odfweb_host; then
+                printf \
+                    'Error: Unable to read the host/domain name of the ODFWEB service.\n' \
+                    1>&2
+                continue
+            fi
 
-        # Check if the input is empty
-        if test -z "${odfweb_host}"; then
-            printf \
-                'Info: Using the default value "odfweb.example.com" for the host/domain name of the ODFWEB service.\n'
-            odfweb_host="odfweb.example.com"
+            # Check if the input is empty
+            if test -z "${odfweb_host}"; then
+                printf \
+                    'Info: Using the default value "odfweb.example.com" for the host/domain name of the ODFWEB service.\n'
+                odfweb_host="odfweb.example.com"
+                break
+            fi
+
+            if is_ip_address "${odfweb_host}"; then
+                if ! is_valid_ip_address "${odfweb_host}"; then
+                    printf \
+                        'Error: The specified IP address "%s" is invalid.\n' \
+                        "${odfweb_host}" \
+                        1>&2
+                    continue
+                fi
+
+                if [[ "${odfweb_host}" =~ ^127\. ]]; then
+                    printf \
+                        'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
+                        "${odfweb_host}" \
+                        1>&2
+                    continue
+                fi
+            else
+                if ! is_valid_domain_name "${idn_command}" "${odfweb_host}"; then
+                    printf \
+                        'Error: The specified domain name "%s" is invalid.\n' \
+                        "${odfweb_host}" \
+                        1>&2
+                    continue
+                fi
+
+                if ! odfweb_domain_resolved_raw="$(getent hosts "${odfweb_host}")"; then
+                    printf \
+                        'Error: The specified domain name "%s" is not resolvable.\n' \
+                        "${odfweb_host}" \
+                        1>&2
+                    continue
+                fi
+
+                if ! odfweb_domain_resolved_ip="$(echo "${odfweb_domain_resolved_raw}" | awk '{print $1}')"; then
+                    printf \
+                        'Error: Unable to parse out the resolved IP address of the "%s" domain name.\n' \
+                        "${odfweb_host}" \
+                        1>&2
+                    continue
+                fi
+
+                if [[ "${odfweb_domain_resolved_ip}" =~ ^127\. ]] || test "${odfweb_domain_resolved_ip}" == "::1"; then
+                    printf \
+                        'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
+                        "${odfweb_domain_resolved_ip}" \
+                        1>&2
+                    continue
+                fi
+            fi
+
+            # Input is valid, next question
             break
-        fi
+        done
+    fi
 
-        if is_ip_address "${odfweb_host}"; then
-            if ! is_valid_ip_address "${odfweb_host}"; then
-                printf \
-                    'Error: The specified IP address "%s" is invalid.\n' \
-                    "${odfweb_host}" \
-                    1>&2
-                continue
-            fi
-
-            if [[ "${odfweb_host}" =~ ^127\. ]]; then
-                printf \
-                    'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
-                    "${odfweb_host}" \
-                    1>&2
-                continue
-            fi
-        else
-            if ! is_valid_domain_name "${idn_command}" "${odfweb_host}"; then
-                printf \
-                    'Error: The specified domain name "%s" is invalid.\n' \
-                    "${odfweb_host}" \
-                    1>&2
-                continue
-            fi
-
-            if ! odfweb_domain_resolved_raw="$(getent hosts "${odfweb_host}")"; then
-                printf \
-                    'Error: The specified domain name "%s" is not resolvable.\n' \
-                    "${odfweb_host}" \
-                    1>&2
-                continue
-            fi
-
-            if ! odfweb_domain_resolved_ip="$(echo "${odfweb_domain_resolved_raw}" | awk '{print $1}')"; then
-                printf \
-                    'Error: Unable to parse out the resolved IP address of the "%s" domain name.\n' \
-                    "${odfweb_host}" \
-                    1>&2
-                continue
-            fi
-
-            if [[ "${odfweb_domain_resolved_ip}" =~ ^127\. ]] || test "${odfweb_domain_resolved_ip}" == "::1"; then
-                printf \
-                    'Error: Loopback address "%s" is NOT supported, please use a physical network address.\n' \
-                    "${odfweb_domain_resolved_ip}" \
-                    1>&2
-                continue
-            fi
-        fi
-
-        # Input is valid, next question
-        break
-    done
-
-    while true; do
-        printf \
-            'Info: What is the port number of the ODFWEB service over HTTPS [443]? '
-        if ! read -r odfweb_port_https; then
+    if test -n "${ODFWEB_PORT_HTTPS}"; then
+        odfweb_port_https="${ODFWEB_PORT_HTTPS}"
+    else
+        while true; do
             printf \
-                'Error: Unable to read the port number of the ODFWEB service over HTTPS.\n' \
-                1>&2
-            continue
-        fi
+                'Info: What is the port number of the ODFWEB service over HTTPS [443]? '
+            if ! read -r odfweb_port_https; then
+                printf \
+                    'Error: Unable to read the port number of the ODFWEB service over HTTPS.\n' \
+                    1>&2
+                continue
+            fi
 
-        # Check if the input is empty
-        if test -z "${odfweb_port_https}"; then
-            printf \
-                'Info: Using the default value "443" for the port number of the ODFWEB service over HTTPS.\n'
-            odfweb_port_https=443
+            # Check if the input is empty
+            if test -z "${odfweb_port_https}"; then
+                printf \
+                    'Info: Using the default value "443" for the port number of the ODFWEB service over HTTPS.\n'
+                odfweb_port_https=443
+                break
+            fi
+
+            # Check if the input is a valid port number
+            if [[ "${odfweb_port_https}" =~ ^[0-9]+$ && ! ("${odfweb_port_https}" -ge 1 && "${odfweb_port_https}" -le 65535) ]]; then
+                printf \
+                    'Error: The port number of the ODFWEB service is invalid.\n' \
+                    1>&2
+                continue
+            fi
             break
-        fi
-
-        # Check if the input is a valid port number
-        if [[ "${odfweb_port_https}" =~ ^[0-9]+$ && ! ("${odfweb_port_https}" -ge 1 && "${odfweb_port_https}" -le 65535) ]]; then
-            printf \
-                'Error: The port number of the ODFWEB service is invalid.\n' \
-                1>&2
-            continue
-        fi
-        break
-    done
+        done
+    fi
 
     db_environment_file="${script_dir}/db.env"
     if ! test -e "${db_environment_file}"; then
@@ -387,9 +398,17 @@ init(){
 
     printf \
         'Info: Operation completed, you may now start the service by running the "docker compose up" command.\n'
-    printf \
-        'Info: Your ODFWEB service will be run at this address: https://%s\n' \
-        "${odfweb_host}"
+    if test "${odfweb_port_https}" -ne 443; then
+        printf \
+            'Info: Your ODFWEB service will be run at this address: https://%s:%s/\n' \
+            "${odfweb_host}" \
+            "${odfweb_port_https}"
+    else
+        printf \
+            'Info: Your ODFWEB service will be run at this address: https://%s/\n' \
+            "${odfweb_host}"
+    fi
+
     printf \
         'Info: Your ODFWEB admin account: admin\n'
     printf \

@@ -45,7 +45,7 @@ Refer to the following instructions to deploy this product to the service host:
 1. If you have an existing HTTPS certificate to use, install them into [the `ssl` sub-directory](ssl/) under the following names:
     + _domain name_.crt: X.509v3 full-chain certificate bundle(have the Intermediate CA and Root CA certificates appended after the end entity certificate) in PEM format.
     + _domain name_.key: PKCS#8 private key in PEM format.
-1. Run the following command to setup the product:
+1. Refer to [the "Customizable parameters of the setup program" section](#customizable-parameters-of-the-setup-program) for the customizable parameters and run the following command to setup the product:
 
     ```bash
     ./setup.sh
@@ -63,6 +63,24 @@ Refer to the following instructions to deploy this product to the service host:
    If you didn't supply a browser-trustable HTTPS certificate in the previous step, you'll need to add the website to your browser's whitelist in the "Website not trusted" warning screen.
 
    For your safety, you should reset and securely store your administrative account's password via the User menu > Personal settings > Security > Password page.
+
+### Customizable parameters of the setup program
+
+The following are the customizable parameters of this product's setup program:
+
+#### ODFWEB\_HOST
+
+The domain name/IP address of the ODFWEB service.  This address should be both accessible/resolvable from your web browser and the MODAODFWEB service container, which means you can't use `localhost` or `127.0.0.0/8`.
+
+**Default value:** (None): Will be prompted by the setup program.  
+**Example value:** `odfweb.example.com`
+
+#### ODFWEB\_PORT\_HTTPS
+
+The HTTPS port number of the ODFWEB service.
+
+**Default value:** (None): Will be prompted by the setup program.  
+**Example value:** `443`
 
 ## Operations
 
