@@ -124,11 +124,11 @@ init(){
     if ! test -e "${db_environment_file}"; then
         while true; do
             printf \
-                'Info: What is the password of the "root" MariaDB adminstrative account [_randomly generated_]? '
+                'Info: What is the password of the "root" MariaDB administrative account [_randomly generated_]? '
             if ! read -rs mariadb_root_password; then
                 # NOTE: In silent mode the user-inputted newline won't be printed
                 printf \
-                    '\nError: Unable to read the password of the "root" MariaDB adminstrative account from the user.\n' \
+                    '\nError: Unable to read the password of the "root" MariaDB administrative account from the user.\n' \
                     1>&2
                 continue
             fi
@@ -136,12 +136,12 @@ init(){
             if test -z "${mariadb_root_password}"; then
                 if ! mariadb_root_password="$(print_random)"; then
                     printf \
-                        '\nError: Unable to generate a random password for the "root" MariaDB adminstrative account.\n' \
+                        '\nError: Unable to generate a random password for the "root" MariaDB administrative account.\n' \
                         1>&2
                     exit 2
                 fi
                 printf \
-                    '\nInfo: Using the randomly generated password "%s" for the "root" MariaDB adminstrative account.\n' \
+                    '\nInfo: Using the randomly generated password "%s" for the "root" MariaDB administrative account.\n' \
                     "${mariadb_root_password}"
                 break
             fi
@@ -181,7 +181,7 @@ init(){
             "${db_environment_file}"
         if ! mariadb_root_password="$(awk -F= '/^MYSQL_ROOT_PASSWORD=/ {print $2}' "${db_environment_file}")"; then
             printf \
-                'Error: Unable to parse out the "root" MariaDB adminstrative account password from the database environment file "%s".\n' \
+                'Error: Unable to parse out the "root" MariaDB administrative account password from the database environment file "%s".\n' \
                 "${db_environment_file}" \
                 1>&2
             flag_db_env_load_failed=true
