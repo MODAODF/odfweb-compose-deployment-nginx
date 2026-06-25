@@ -117,13 +117,8 @@ services:
       #- type: bind
         #source: ./modaodfweb-logs
         #target: /var/log
-    cap_add:
-      - CHOWN
-      - DAC_OVERRIDE
-      - FOWNER
-      - MKNOD
-      - SYS_ADMIN
-      - SYS_CHROOT
+    security_opt:
+      - seccomp=cool-seccomp-profile.json
     ulimits:
       # docker --ulimit does not support unlimited or large numbers · Issue #12515 · moby/moby
       # https://github.com/moby/moby/issues/12515
