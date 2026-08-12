@@ -471,7 +471,7 @@ print_random () {
     )
     if ! LC_ALL=C.UTF-8 \
         tr "${tr_opts[@]}" \
-            'A-Za-z0-9!#%&()*+,-./:;<=>?@[\]^_{}~' \
+            'A-Za-z0-9!#%&()*+,./:;<=>?@[\]^_{}~' \
             </dev/urandom \
             | head -c 16; then
         printf \
