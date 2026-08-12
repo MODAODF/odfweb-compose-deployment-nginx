@@ -47,7 +47,7 @@ services:
       - redis:/data
 
   app:
-    image: ossiidev/odfweb:5.0.0-fpm
+    image: ossiidev/odfweb:5.0.8-fpm
     restart: always
     depends_on:
       editor:
