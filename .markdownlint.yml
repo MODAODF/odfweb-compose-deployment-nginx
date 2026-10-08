@@ -5,7 +5,7 @@
 # Configuration Templates project
 # https://github.com/the-common/markdownlint-nodejs-config-templates
 #
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Inherit Markdownlint rules
@@ -44,3 +44,9 @@ no-inline-html: False
 # `title` property
 first-line-h1:
   front_matter_title: '.*'
+
+# Do not align GFM table delimiter columns, since it is not required and
+# may cause unnecessary diffs
+table:
+  aligned_delimiter: False
+  style: compact

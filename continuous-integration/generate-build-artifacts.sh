@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 # Generate the project build artifacts
 #
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 set \
     -o errexit \
     -o nounset
 
 required_commands=(
-    realpath
-    python3
     git
+    python3
+    realpath
 )
 for command in "${required_commands[@]}"; do
     if ! command -v "${command}" >/dev/null; then
@@ -106,6 +107,16 @@ if ! version_describe="$(
 fi
 project_version="${version_describe#v}"
 
+release_dir="${project_dir}/dist/release"
+printf \
+    'Info: Creating the release directory...\n'
+if ! mkdir -p "${release_dir}"; then
+    printf \
+        'Error: Unable to create the release directory.\n' \
+        1>&2
+    exit 2
+fi
+
 printf \
     'Info: Generating the project archive...\n'
 project_id="${CI_PROJECT_NAME:-"${PROJECT_ID:-"${project_dirname}"}"}"
@@ -118,7 +129,7 @@ git_archive_all_opts=(
 if ! \
     git-archive-all \
         "${git_archive_all_opts[@]}" \
-        "${release_id}.tar.gz"; then
+        "${release_dir}/${release_id}.tar.gz"; then
     printf \
         'Error: Unable to generate the project archive.\n' \
         1>&2

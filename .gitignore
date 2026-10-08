@@ -7,6 +7,7 @@
 # https://github.com/the-common/gitignore-templates
 #
 # Copyright 2022 林博仁(Buo-ren, Lin) <buo.ren.lin@gmail.com>
+# Copyright 2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Don't track regular Unix hidden files
@@ -23,6 +24,9 @@
 # https://pre-commit.com/
 !.pre-commit-config.yaml
 
+# Do track gitmailmap(5)
+!/.mailmap
+
 # Do track Markdownlint configuration files
 # https://github.com/DavidAnson/markdownlint
 !.markdownlint.*
@@ -30,6 +34,9 @@
 # Do track Drone CI configuration files
 # https://docs.drone.io/
 !.drone.yml
+
+# Do track Foregejo Actions configuration files
+!/.forgejo/
 
 # Do track yamllint configuration files
 !.yamllint
@@ -40,6 +47,9 @@
 
 # Do track GitLab CI configuration file
 !/.gitlab-ci.yml
+
+# Do track ShellCheck configuration file
+!/.shellcheckrc
 
 # Don't track common backup filename extensions
 *~
@@ -88,6 +98,15 @@
 
 # Don't track continuous integration virtual environments
 /continuous-integration/venv/
+
+# Don't track unpacked product files
+/odfweb-compose-deployment-nginx-*/
+
+# Don't track release assets
+/dist/release/
+
+# Don't track patch files
+*.patch
 
 # Don't track TLS(SSL) certificate files
 *.crt

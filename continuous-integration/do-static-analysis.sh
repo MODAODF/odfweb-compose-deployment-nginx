@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # Check potential problems in the project
-# Copyright 2024 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
+#
+# Copyright 2025 林博仁(Buo-ren Lin) <buo.ren.lin@gmail.com>
 # SPDX-License-Identifier: CC-BY-SA-4.0
 set \
     -o errexit \
     -o nounset
 
 required_commands=(
-    realpath
-    python3
     pip
+    python3
+    realpath
 )
 for command in "${required_commands[@]}"; do
     if ! command -v "${command}" >/dev/null; then

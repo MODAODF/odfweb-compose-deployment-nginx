@@ -5,7 +5,7 @@
 # * REUSE.toml | REUSE Specification – Version 3.2 | REUSE
 #   https://reuse.software/spec-3.2/#reusetoml
 #
-# Copyright 2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>
+# Copyright 2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
 version = 1
@@ -17,5 +17,5 @@ path = [
     "README.*.md",
     "**/README.*.md"
 ]
-SPDX-FileCopyrightText = '2025 Buo-ren Lin (OSSII) <buoren.lin@ossii.com.tw>'
+SPDX-FileCopyrightText = '2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>'
 SPDX-License-Identifier = 'AGPL-3.0-or-later'
