@@ -19,3 +19,10 @@ path = [
 ]
 SPDX-FileCopyrightText = '2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>'
 SPDX-License-Identifier = 'AGPL-3.0-or-later'
+
+[[annotations]]
+path = [
+    "cool-seccomp-profile.json"
+]
+SPDX-FileCopyrightText = '2025 Collabora Online authors <https://github.com/CollaboraOnline/online.mirror/commits/c5da9d06cafbda7b1a68cfad02019c1355188199/docker/cool-seccomp-profile.json>'
+SPDX-License-Identifier = 'AGPL-3.0-or-later'
