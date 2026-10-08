@@ -140,6 +140,7 @@ init(){
                         1>&2
                     exit 2
                 fi
+
                 printf \
                     '\nInfo: Using the randomly generated password "%s" for the "root" MariaDB administrative account.\n' \
                     "${mariadb_root_password}"
