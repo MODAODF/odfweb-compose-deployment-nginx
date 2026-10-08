@@ -156,7 +156,7 @@ server {
     location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)(?:$|/)  { return 404; }
     location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console)                { return 404; }
 
-    # Hide app environment file access whic may contain secrets
+    # Hide app environment file access which may contain secrets
     location ~ \.env$              { return 404; }
 
     # Ensure this block, which passes PHP files to the PHP process, is above the blocks
