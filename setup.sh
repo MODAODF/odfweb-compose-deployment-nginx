@@ -568,14 +568,22 @@ required_commands=(
     # For parsing out the existing values from the configuration files
     awk
 
+    # For setting file permissions
+    chmod
+
+    # For backing up existing configuration files
+    cp
+
     # For resolving hostnames to IP addresses
     getent
 
     # For generating random passwords
     head
-    paste
     shuf
     tr
+
+    # For generating HTTPS self-signed certificates
+    openssl
 
     realpath
 
