@@ -154,6 +154,32 @@ Refer to the following instructions to check the service logs:
     + `--tail=100`: Show the last 100 log entries.
     + (Optional) `--follow`: Follow and print new log entries to the stdout.
 
+#### Enter ODFWEB service's maintenance mode
+
+Refer to the following instructions to enter the maintenance mode of the ODFWEB service:
+
+1. Launch a text terminal.
+1. Change the working directory to the directory that hosts this document.
+1. Run the following command to enter the maintenance mode of the ODFWEB service:
+
+    ```bash
+    docker compose exec -u 33 app \
+        php occ maintenance:mode --on
+    ```
+
+#### Exit ODFWEB service's maintenance mode
+
+Refer to the following instructions to exit the maintenance mode of the ODFWEB service:
+
+1. Launch a text terminal.
+1. Change the working directory to the directory that hosts this document.
+1. Run the following command to exit the maintenance mode of the ODFWEB service:
+
+    ```bash
+    docker compose exec -u 33 app \
+        php occ maintenance:mode --off
+    ```
+
 #### Destroy the service containers
 
 Refer to the following instructions to destroy the service containers:

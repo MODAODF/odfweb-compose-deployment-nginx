@@ -154,6 +154,32 @@ ODFWEB 服務的 HTTPS 連接埠號碼。
     + `--tail=100` ：顯示最後 100 筆運行紀錄。
     + （選用）`--follow` ：跟隨並印出新的運行紀錄至標準輸出裝置(stdout)。
 
+#### 進入 ODFWEB 服務的維護模式
+
+遵循下列步驟以進入 ODFWEB 服務的維護模式：
+
+1. 啟動一終端機。
+1. 將作業目錄(working directory)切換至本文件所在目錄。
+1. 執行下列命令以進入 ODFWEB 服務的維護模式：
+
+    ```bash
+    docker compose exec -u 33 app \
+        php occ maintenance:mode --on
+    ```
+
+#### 退出 ODFWEB 服務的維護模式
+
+遵循下列步驟以退出 ODFWEB 服務的維護模式：
+
+1. 啟動一終端機。
+1. 將作業目錄(working directory)切換至本文件所在目錄。
+1. 執行下列命令以退出 ODFWEB 服務的維護模式：
+
+    ```bash
+    docker compose exec -u 33 app \
+        php occ maintenance:mode --off
+    ```
+
 #### 摧毀服務容器
 
 遵循下列步驟以摧毀服務容器：
