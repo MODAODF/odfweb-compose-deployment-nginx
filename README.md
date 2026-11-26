@@ -128,7 +128,7 @@ Refer to the following instructions to restart the service:
 
 #### Check the service logs
 
-Refer to the following instructions to stop the service:
+Refer to the following instructions to check the service logs:
 
 1. Launch a text terminal.
 1. Change the working directory to the directory that hosts this document.
