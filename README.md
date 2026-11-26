@@ -154,9 +154,9 @@ Refer to the following instructions to check the service logs:
     + `--tail=100`: Show the last 100 log entries.
     + (Optional) `--follow`: Follow and print new log entries to the stdout.
 
-#### Destroy the service container
+#### Destroy the service containers
 
-Refer to the following instructions to destroy the service container:
+Refer to the following instructions to destroy the service containers:
 
 1. Launch a text terminal
 1. Change the working directory to the directory that hosts this document.
@@ -176,7 +176,7 @@ Refer to the following instructions to drop all data associated with this servic
 
 1. Launch a text terminal
 1. Change the working directory to the directory that hosts this document.
-1. [Destroy the service container](#destroy-the-service-container).
+1. [Destroy the service containers](#destroy-the-service-containers).
 1. Run the following commands to delete all data in the named volumes:
 
     ```bash
