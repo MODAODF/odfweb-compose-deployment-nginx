@@ -96,7 +96,7 @@ services:
       - app
 
   editor:
-    image: ossiidev/modaodfweb:4.0
+    image: ossiidev/modaodfweb:4.0.3-pkgfix
     restart: always
     environment:
       # Set local timezone to UTC+8
@@ -117,8 +117,15 @@ services:
       #- type: bind
         #source: ./modaodfweb-logs
         #target: /var/log
+    cap_add:
+      # Required for setting up the files used in the jailed document process quickly
+      - SYS_ADMIN
     security_opt:
       - seccomp=modaodfweb-seccomp-profile.json
+      # This can be used to drop SYS_ADMIN capability requirement on
+      # AppArmor-enabled hosts, see APPARMOR.md for details on loading
+      # the profile
+      #- apparmor=modaodfweb-editor
     ulimits:
       # docker --ulimit does not support unlimited or large numbers · Issue #12515 · moby/moby
       # https://github.com/moby/moby/issues/12515

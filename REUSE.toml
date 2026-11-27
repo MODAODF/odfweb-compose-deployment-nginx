@@ -15,7 +15,8 @@ path = [
     "README.md",
     "**/README.md",
     "README.*.md",
-    "**/README.*.md"
+    "**/README.*.md",
+    "APPARMOR.md",
 ]
 SPDX-FileCopyrightText = '2026 OSS Integral Institute Co., Ltd. <https://www.ossii.com.tw/contact>'
 SPDX-License-Identifier = 'AGPL-3.0-or-later'
