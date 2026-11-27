@@ -330,6 +330,18 @@ init(){
         exit 2
     fi
 
+    # MODAODFWEB(run as 1001) requires this file to be readable by others
+    #
+    # Admin console password is managed by modaodfwebconfig and is not in this file
+    printf \
+        'Info: Setting proper read permission for the MODAODFWEB configuration file...\n'
+    if ! chmod 0644 "${script_dir}/modaodfweb-config/coolwsd.xml"; then
+        printf \
+            'Error: Unable to set proper read permission for the MODAODFWEB configuration file.\n' \
+            1>&2
+        exit 2
+    fi
+
     printf \
         'Info: Setting execution permission for the post-installation hooks...\n'
     for hook in "${script_dir}/app-hooks/post-installation/"*.sh; do
