@@ -118,7 +118,7 @@ app.env
 app-hooks/post-installation/initialize-richdocuments-app.sh
 db.env
 compose.yml
-modaodfweb-config/modaodfweb.xml
+modaodfweb-config/coolwsd.xml
 nginx.conf.d/odfweb.conf
 odfweb.openssl.cnf
 

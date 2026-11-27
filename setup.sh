@@ -266,7 +266,7 @@ init(){
         "${script_dir}/db.env.in"
         "${script_dir}/compose.yml.in"
         "${script_dir}/nginx.conf.d/odfweb.conf.in"
-        "${script_dir}/modaodfweb-config/modaodfweb.xml.in"
+        "${script_dir}/modaodfweb-config/coolwsd.xml.in"
         "${script_dir}/ssl/odfweb.openssl.cnf.in"
     )
     for template in "${config_templates[@]}"; do

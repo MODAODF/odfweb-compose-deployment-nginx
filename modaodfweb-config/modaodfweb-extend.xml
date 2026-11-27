@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Extension configuration file for the MODAODFWEB service
+
+    SPDX-FileCopyrightText: 2026 The OxOffice Online Contributors
+    SPDX-License-Identifier: MPL-2.0
+-->
+
+<config>
+
+    <lokit>
+        <locale desc="Default locale for the kit application. empty means system default locale." type="string" default="">zh_TW</locale>
+        <showHelpButton desc="Show help button in the kit application." type="bool" default="false"></showHelpButton>
+    </lokit>
+
+    <userInterface>
+        <iconTheme>
+            <light desc="Icon theme for light mode." type="string" default="colibre_svg"></light>
+            <dark desc="Icon theme for dark mode." type="string" default="colibre_dark_svg"></dark>
+        </iconTheme>
+    </userInterface>
+
+    <watermark>
+        <editing desc="If enabled, a watermark will be displayed when editing document." type="bool" default="false"></editing>
+        <printing desc="If enabled, a watermark will be displayed when printing document or exporting PDF document." type="bool" default="false"></printing>
+        <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2"></opacity>
+        <angle desc="Watermark angle." type="uint" default="45"></angle>
+        <familyname desc="Font name." type="string" default=""></familyname>
+        <color desc="Watermark text color." type="string" default="#000000"></color>
+        <bold desc="Is the font bold?" type="bool" default="false"></bold>
+        <italic desc="Is the font italic?" type="bool" default="false"></italic>
+        <outline desc="Is the font hollow?" type="bool" default="false"></outline>
+        <shadow desc="Is the font shaded?" type="bool" default="false"></shadow>
+        <relief desc="There are two styles: 'embossed' or 'engraved'. If specified, outline shadow will be disabled." type="string" default=""></relief>
+        <text desc="Watermark text to be displayed on the document if entered" type="string"></text>
+    </watermark>
+</config>

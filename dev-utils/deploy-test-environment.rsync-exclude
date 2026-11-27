@@ -13,7 +13,7 @@ dev-utils/
 # Configuration generated from templates
 compose.yml
 nginx.conf.d/odfweb.conf
-modaodfweb-config/modaodfweb.xml
+modaodfweb-config/coolwsd.xml
 ssl/odfweb.openssl.cnf
 
 # Certificates and keys
